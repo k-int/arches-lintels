@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+.coverage
+coverage
+.vscode
+*.DS_Store
+
+env
+env-wsl
+env-windows
+venv
