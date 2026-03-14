@@ -11,7 +11,5 @@ def build_ui():
         python_file = f"{file_name}.py"
         python_file_path = Path(views_dir, python_file)
 
-        print(ui_file, python_file_path)
-
         command = ['pyuic6', ui_file, '-o', python_file_path]
         subprocess.call(command, shell=True)
