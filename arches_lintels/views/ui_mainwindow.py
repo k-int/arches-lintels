@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\arches_lintels\ui\ui_mainwindow.ui'
+# Form implementation generated from reading ui file 'arches_lintels\ui\ui_mainwindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.10.2
 #
@@ -79,7 +79,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Arches Lintels"))
         self.label.setText(_translate("MainWindow", "Arches Lintels"))
-        self.pushButton.setText(_translate("MainWindow", "PushButton"))
-        self.pushButton_2.setText(_translate("MainWindow", "PushButton"))
+        self.pushButton.setText(_translate("MainWindow", "Home"))
+        self.pushButton_2.setText(_translate("MainWindow", "AA"))
         self.pushButton_3.setText(_translate("MainWindow", "PushButton"))
         self.actionmore.setText(_translate("MainWindow", "more"))
