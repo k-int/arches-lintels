@@ -75,20 +75,12 @@
            <property name="text">
             <string/>
            </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/fa-archway-solid.svg</normaloff>:/img/img/icons/fa-archway-solid.svg</iconset>
-           </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="controlCentreIconOnly">
            <property name="text">
             <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/fa-bars-progress-solid.svg</normaloff>:/img/img/icons/fa-bars-progress-solid.svg</iconset>
            </property>
           </widget>
          </item>
@@ -97,10 +89,6 @@
            <property name="text">
             <string/>
            </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/Arches_icon_black.svg</normaloff>:/img/img/Arches_icon_black.svg</iconset>
-           </property>
           </widget>
          </item>
          <item>
@@ -108,20 +96,12 @@
            <property name="text">
             <string/>
            </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/fa-gear-solid.svg</normaloff>:/img/img/icons/fa-gear-solid.svg</iconset>
-           </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="aboutIconOnly">
            <property name="text">
             <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/facircle-question-regular.svg</normaloff>:/img/img/icons/facircle-question-regular.svg</iconset>
            </property>
           </widget>
          </item>
@@ -135,7 +115,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>438</height>
+           <height>428</height>
           </size>
          </property>
         </spacer>
@@ -192,10 +172,6 @@
            <property name="text">
             <string>Home</string>
            </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/fa-archway-solid.svg</normaloff>:/img/img/icons/fa-archway-solid.svg</iconset>
-           </property>
            <property name="iconSize">
             <size>
              <width>15</width>
@@ -208,10 +184,6 @@
           <widget class="QPushButton" name="controlCentreFull">
            <property name="text">
             <string>Control Centre</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/fa-bars-progress-solid.svg</normaloff>:/img/img/icons/fa-bars-progress-solid.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -226,10 +198,6 @@
            <property name="text">
             <string>Arches Manager</string>
            </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/Arches_icon_black.svg</normaloff>:/img/img/Arches_icon_black.svg</iconset>
-           </property>
            <property name="iconSize">
             <size>
              <width>15</width>
@@ -243,10 +211,6 @@
            <property name="text">
             <string>Settings</string>
            </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/fa-gear-solid.svg</normaloff>:/img/img/icons/fa-gear-solid.svg</iconset>
-           </property>
            <property name="iconSize">
             <size>
              <width>15</width>
@@ -259,10 +223,6 @@
           <widget class="QPushButton" name="aboutFull">
            <property name="text">
             <string>About</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/img/img/icons/facircle-question-regular.svg</normaloff>:/img/img/icons/facircle-question-regular.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -369,8 +329,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
