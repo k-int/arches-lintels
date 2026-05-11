@@ -7,6 +7,11 @@ coverage
 .vscode
 *.DS_Store
 
+arches_lintels.egg-info/
+arches_lintels/ui/build/
+arches_lintels/ui/lintels.pro.user
+arches_lintels/ui/.qtcreator
+
 env
 env-wsl
 env-windows
