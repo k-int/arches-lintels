@@ -2,10 +2,7 @@ import sys
 from PyQt6.QtWidgets import QApplication
 
 from scripts.build_ui import build_ui
-
 from arches_lintels.controllers.mainwindow import MainWindow
-
-from arches_lintels.models.settings_model import SettingsModel
 
 
 def main():
