@@ -1,3 +1,33 @@
+QWidget, QLabel, QPushButton, QLineEdit {
+    font-family: "Open Sans";
+}
+
+QPushButton {
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid #788596;
+    padding: 0px 4px 0px 4px;
+    color: #788596;
+}
+
+QLineEdit {
+    height: 20px;
+    border: 1px solid #788596;
+    border-radius: 3px;
+    text-align: left;
+    background-color: #fff;
+}
+
+QComboBox {
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid #788596;
+    padding: 0px 4px 0px 4px;
+    background-color: #fff;
+    color: #788596;
+    text-align: center;
+}
+
 #MainWindow {
     background-color: #fff;
 }
@@ -55,3 +85,9 @@
     color: #fff;
 }
 
+/* Settings page */
+
+#settingsTitle {
+    font-weight: 600;
+    font-size: 16px;
+}
