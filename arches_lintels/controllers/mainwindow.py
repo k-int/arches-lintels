@@ -48,7 +48,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.aboutFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(4))
 
     def setup_ui(self):
-        QDir.addSearchPath("img", os.path.join(self.settings.project_root, "img"))
+        QDir.addSearchPath("img", os.path.join(self.settings.app_root, "img"))
 
         self.homeButtonIconOnly.setIcon(QIcon("img:icons/fa-archway-solid-white.svg"))
         self.homeButtonIconOnly.setIconSize(QSize(20,20))
