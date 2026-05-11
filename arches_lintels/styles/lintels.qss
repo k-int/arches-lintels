@@ -1,0 +1,79 @@
+#MainWindow {
+    background-color: #fff;
+}
+#change_btn {
+    padding: 5px;
+    border: none;
+    width: 30px;
+    height: 30px;
+}
+
+#widget {
+    background-color: #f9fafd;
+}
+
+#iconOnlyMenu {
+    background-color: #313a46;
+    width:50px;
+}
+
+#iconOnlyMenu QPushButton, QLabel {
+    height:50px;
+    border:none;
+}
+
+#iconOnlyMenu QPushButton:hover {
+    background-color: rgba( 86, 101, 115, 0.5);
+}
+
+#logo_label_1 {
+    padding: 5px
+}
+
+#fulMenu {
+    background-color: #313a46;
+}
+
+/* style for QPushButton */
+#fulMenu QPushButton {
+    border:none;
+    border-radius: 3px;
+    text-align: left;
+    padding: 8px 0 8px 15px;
+    color: #788596;
+}
+
+#fulMenu QPushButton:hover {
+    background-color: rgba( 86, 101, 115, 0.5);
+}
+
+#fulMenu QPushButton:checked {
+    color: #fff;
+}
+
+#logo_label_2 {
+    padding: 5px;
+    color: #fff;
+}
+
+#logo_label_3 {
+    padding-right: 10px;
+    color: #fff;
+}
+
+#search_btn {
+    border: none;
+}
+
+#search_input {
+    border: none;
+    padding: 5px 10px;
+}
+
+#search_input:focus {
+    background-color: #70B9FE;
+}
+
+#user_btn {
+    border: none;
+}
