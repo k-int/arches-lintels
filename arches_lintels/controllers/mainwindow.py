@@ -7,6 +7,7 @@ from PyQt6.QtWidgets import QMainWindow, QApplication
 from arches_lintels.settings import APP_ROOT
 from arches_lintels.models.settings_model import SettingsModel
 from arches_lintels.views.ui_mainwindow import Ui_MainWindow
+from arches_lintels.controllers.settings_page import SettingsPage
 from arches_lintels.controllers.components import file_browser
 
 class MainWindow(QMainWindow):
@@ -22,32 +23,8 @@ class MainWindow(QMainWindow):
         self.settings = SettingsModel()
         self.init_ui()
 
-    def navbar_menu_btn_change(self):
-        if self.ui.menuButton.isChecked():
-            self.ui.iconOnlyMenu.setVisible(True)
-            self.ui.fullMenu.setVisible(False)
-        else:
-            self.ui.iconOnlyMenu.setVisible(False)
-            self.ui.fullMenu.setVisible(True)
-
-    def page_navigation(self):
-        self.ui.stackedWidget.setCurrentIndex(0)
-
-        # Needs to change index for both full and collapsed navbar
-        self.ui.homeButtonIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
-        self.ui.homeFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
-        
-        self.ui.controlCentreIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
-        self.ui.controlCentreFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
-        
-        self.ui.archesCentreIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
-        self.ui.archesCentreFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
-        
-        self.ui.settingsIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(3))
-        self.ui.settingsFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(3))
-
-        self.ui.aboutIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
-        self.ui.aboutFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
+        # controllers for individual pages
+        self.settings_controller = SettingsPage(self.ui)
 
     def init_ui(self):
         QDir.addSearchPath("img", os.path.join(APP_ROOT, "img"))
@@ -106,3 +83,30 @@ class MainWindow(QMainWindow):
             self.ui.stackedWidget.setCurrentIndex(3)
         else:
             self.ui.stackedWidget.setCurrentIndex(0)
+
+    def navbar_menu_btn_change(self):
+        if self.ui.menuButton.isChecked():
+            self.ui.iconOnlyMenu.setVisible(True)
+            self.ui.fullMenu.setVisible(False)
+        else:
+            self.ui.iconOnlyMenu.setVisible(False)
+            self.ui.fullMenu.setVisible(True)
+
+    def page_navigation(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+
+        # Needs to change index for both full and collapsed navbar
+        self.ui.homeButtonIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
+        self.ui.homeFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
+        
+        self.ui.controlCentreIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
+        self.ui.controlCentreFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
+        
+        self.ui.archesCentreIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
+        self.ui.archesCentreFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
+        
+        self.ui.settingsIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(3))
+        self.ui.settingsFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(3))
+
+        self.ui.aboutIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
+        self.ui.aboutFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
