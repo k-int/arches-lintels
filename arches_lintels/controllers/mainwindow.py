@@ -15,10 +15,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.is_fullscreen = True
-        self.settings = SettingsModel()
 
-        self.setup_ui()
+        self.settings = SettingsModel()
+        self.init_ui()
 
     def navbar_menu_btn_change(self):
         if self.menuButton.isChecked():
@@ -47,7 +46,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.aboutIconOnly.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(4))
         self.aboutFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(4))
 
-    def setup_ui(self):
+    def init_ui(self):
         QDir.addSearchPath("img", os.path.join(self.settings.app_root, "img"))
 
         self.homeButtonIconOnly.setIcon(QIcon("img:icons/fa-archway-solid-white.svg"))
@@ -83,4 +82,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fullMenu.setVisible(True)
         self.menuButton.clicked.connect(self.navbar_menu_btn_change)
 
-        self.page_navigation()
+        # Needs to change index for both full and collapsed navbar
+        self.homeButtonIconOnly.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(0))
+        self.homeFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(0))
+        
+        self.controlCentreIconOnly.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(1))
+        self.controlCentreFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(1))
+        
+        self.archesCentreIconOnly.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(2))
+        self.archesCentreFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(2))
+        
+        self.settingsIconOnly.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(3))
+        self.settingsFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(3))
+
+        self.aboutIconOnly.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(4))
+        self.aboutFull.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(4))
+
+        # set starting interface
+        if not self.settings.settings_data["install_directory"]:
+            self.stackedWidget.setCurrentIndex(3)
+        else:
+            self.stackedWidget.setCurrentIndex(0)
