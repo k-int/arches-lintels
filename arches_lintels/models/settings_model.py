@@ -1,12 +1,10 @@
 import os
 import json
 
+from arches_lintels.settings import SYS_SETTINGS_PATH
+
 class SettingsModel:
     def __init__(self):
-        self.root_dir = os.getcwd()
-        self.app_root = os.path.join(self.root_dir, "arches_lintels")
-
-        self.settings_file_path = os.path.join(self.root_dir, "settings.json")    
         self.settings_data = self.create_or_get_settings()
 
     def defaults(self):
@@ -34,11 +32,11 @@ class SettingsModel:
         }
 
     def create_or_get_settings(self):
-        if not os.path.exists(self.settings_file_path):
+        if not os.path.exists(SYS_SETTINGS_PATH):
             file_contents = self.defaults()
             self.save(file_contents)
         else:
-            with open(self.settings_file_path, 'r') as f:
+            with open(SYS_SETTINGS_PATH, 'r') as f:
                 file_contents = json.load(f)
         return file_contents
 
@@ -50,5 +48,5 @@ class SettingsModel:
         self.save(self.data)
 
     def save(self, data_to_save):
-        with open(self.settings_file_path, 'w') as f:
+        with open(SYS_SETTINGS_PATH, 'w') as f:
             json.dump(data_to_save, f, )
