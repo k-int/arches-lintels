@@ -28,7 +28,8 @@ class SettingsModel:
                     "install_directory": ""
                 }
             },
-            "projects": []
+            "projects": [],
+            "theme": "" #todo get from system default
         }
 
     def create_or_get_settings(self):
