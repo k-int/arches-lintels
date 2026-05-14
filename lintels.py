@@ -7,12 +7,14 @@ from PyQt6.QtGui import QFontDatabase
 
 from scripts.build_ui import build_ui
 from arches_lintels.settings import APP_ROOT
-from arches_lintels.controllers.mainwindow import MainWindow
 
 
 def main():
     # run .ui to .py conversions
     build_ui()
+
+    # import main window after rebuilding ui
+    from arches_lintels.controllers.mainwindow import MainWindow
 
     app = QApplication(sys.argv)
 
