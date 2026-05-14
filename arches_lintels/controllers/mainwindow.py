@@ -4,7 +4,7 @@ from PyQt6.QtGui import QIcon, QCursor, QPixmap, QTransform
 from PyQt6.QtCore import QDir, QSize
 from PyQt6.QtWidgets import QMainWindow
 
-from arches_lintels.settings import APP_ROOT
+from arches_lintels.settings import APP_ROOT, VERSION
 from arches_lintels.models.settings_model import SettingsModel
 from arches_lintels.views.ui_mainwindow import Ui_MainWindow
 from arches_lintels.controllers.settings_page import SettingsPage
@@ -55,6 +55,9 @@ class MainWindow(QMainWindow):
 
         self.ui.menuButton.setIcon(QIcon("img:icons/fa-bars-solid.svg"))
         self.ui.menuButton.setIconSize(QSize(20,20))
+
+        self.ui.versionIconOnly.setText(VERSION)
+        self.ui.versionFull.setText(f"Lintels {VERSION}")
 
         # initialise full menu visible by default
         self.ui.iconOnlyMenu.setVisible(False)
