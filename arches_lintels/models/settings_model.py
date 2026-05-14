@@ -47,10 +47,7 @@ class SettingsModel:
         for key in keys:
             if isinstance(settings_temp_copy[key], dict):
                 settings_temp_copy = settings_temp_copy[key]
-                print("dict v", settings_temp_copy)
             else:
-                print("in else, dict:", settings_temp_copy)
-                print("key", settings_temp_copy[key])
                 return settings_temp_copy[key]
 
     def _save_conf_vals(self, keys, value):
