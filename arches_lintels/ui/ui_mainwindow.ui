@@ -395,14 +395,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit">
+                <widget class="QLineEdit" name="filePathLintels">
                  <property name="readOnly">
                   <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton">
+                <widget class="QPushButton" name="fileBrowseLintels">
                  <property name="text">
                   <string>Browse</string>
                  </property>
@@ -426,14 +426,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_2">
+                <widget class="QLineEdit" name="filePathPython">
                  <property name="readOnly">
                   <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_2">
+                <widget class="QPushButton" name="fileBrowsePython">
                  <property name="text">
                   <string>Browse</string>
                  </property>
@@ -457,14 +457,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_3">
+                <widget class="QLineEdit" name="filePathElastic">
                  <property name="readOnly">
                   <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_3">
+                <widget class="QPushButton" name="fileBrowseElastic">
                  <property name="text">
                   <string>Browse</string>
                  </property>

@@ -2,13 +2,12 @@ import os
 
 from PyQt6.QtGui import QIcon, QCursor, QPixmap, QTransform
 from PyQt6.QtCore import QDir, QSize
-from PyQt6.QtWidgets import QMainWindow, QApplication
+from PyQt6.QtWidgets import QMainWindow
 
 from arches_lintels.settings import APP_ROOT
 from arches_lintels.models.settings_model import SettingsModel
 from arches_lintels.views.ui_mainwindow import Ui_MainWindow
 from arches_lintels.controllers.settings_page import SettingsPage
-from arches_lintels.controllers.components import file_browser
 
 class MainWindow(QMainWindow):
     """

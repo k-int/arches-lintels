@@ -16,6 +16,7 @@ QLineEdit {
     border-radius: 3px;
     text-align: left;
     background-color: #fff;
+    color: black;
 }
 
 QComboBox {

@@ -40,13 +40,41 @@ class SettingsModel:
                 file_contents = json.load(f)
         return file_contents
 
-    def get_config_value(self, key):
-        return self.settings_data.get(key)
+    def _get_conf_vals(self, keys):
+        # helper function to get values despite any nesting
+        settings_temp_copy = self.settings_data
+        for key in keys:
+            if isinstance(settings_temp_copy[key], dict):
+                settings_temp_copy = settings_temp_copy[key]
+                print("dict v", settings_temp_copy)
+            else:
+                print("in else, dict:", settings_temp_copy)
+                print("key", settings_temp_copy[key])
+                return settings_temp_copy[key]
 
-    def update_value(self, key, value):
-        self.settings_data[key] = value
-        self.save(self.data)
+    def _save_conf_vals(self, keys, value):
+        # helper function to save values despite any nesting
+        settings_temp_copy = self.settings_data
+        for key in keys:
+            if isinstance(settings_temp_copy[key], dict):
+                settings_temp_copy = settings_temp_copy[key]
+            else:
+                settings_temp_copy[key] = value
+
+    def get_config_value(self, keys):
+        if not isinstance(keys, list):
+            keys = keys.split()
+
+        val = self._get_conf_vals(keys)
+        return val
+
+    def update_value(self, keys, value):
+        if not isinstance(keys, list):
+            keys = keys.split()
+
+        self._save_conf_vals(keys, value)
+        self.save(self.settings_data)
 
     def save(self, data_to_save):
         with open(SYS_SETTINGS_PATH, 'w') as f:
-            json.dump(data_to_save, f, )
+            json.dump(data_to_save, f, indent=4)
