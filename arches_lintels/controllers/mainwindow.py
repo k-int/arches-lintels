@@ -87,21 +87,3 @@ class MainWindow(QMainWindow):
         else:
             self.ui.iconOnlyMenu.setVisible(False)
             self.ui.fullMenu.setVisible(True)
-
-    def page_navigation(self):        
-
-        # Needs to change index for both full and collapsed navbar
-        self.ui.homeButtonIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
-        self.ui.homeFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
-        
-        self.ui.controlCentreIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
-        self.ui.controlCentreFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(1))
-        
-        self.ui.archesCentreIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
-        self.ui.archesCentreFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(2))
-        
-        self.ui.settingsIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(3))
-        self.ui.settingsFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(3))
-
-        self.ui.aboutIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
-        self.ui.aboutFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
