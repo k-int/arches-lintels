@@ -7,3 +7,7 @@ ROOT_DIR = os.getcwd()
 APP_ROOT = os.path.join(ROOT_DIR, APP_NAME)
 
 SYS_SETTINGS_PATH = os.path.join(ROOT_DIR, "settings.json")    
+
+# Postgresql database settings
+PG_USER = "postgres"
+PG_ENCODING = "UTF8"
