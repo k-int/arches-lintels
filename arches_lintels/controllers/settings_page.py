@@ -13,7 +13,7 @@ class SettingsPage:
         super().__init__()
         self.ui = ui
 
-        self.settings = SettingsModel()
+        self.settings = SettingsModel(initialise_config=True)
 
         self.ui.filePathLintels.setText(self.settings.get_config_value(["install_directory"]))
         self.ui.filePathPython.setText(self.settings.get_config_value(["dependencies","python","install_directory"]))
@@ -36,6 +36,11 @@ class SettingsPage:
                     self.ui.filePathPostgres,
                     ["dependencies","postgres","install_directory"])
         )
+        self.ui.fileBrowsePostgis.clicked.connect(
+            partial(self.select_folder,
+                    self.ui.filePathPostgis,
+                    ["dependencies","postgis","install_directory"])
+        )
         self.ui.fileBrowseElastic.clicked.connect(
             partial(self.select_folder,
                     self.ui.filePathElastic,
@@ -45,6 +50,11 @@ class SettingsPage:
             partial(self.select_folder,
                     self.ui.filePathNodejs,
                     ["dependencies","nodejs","install_directory"])
+        )
+        self.ui.fileBrowseGdal.clicked.connect(
+            partial(self.select_folder,
+                    self.ui.filePathGdal,
+                    ["dependencies","gdal","install_directory"])
         )
 
 

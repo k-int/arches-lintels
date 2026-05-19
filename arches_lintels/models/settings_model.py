@@ -4,7 +4,8 @@ import json
 from arches_lintels.settings import SYS_SETTINGS_PATH
 
 class SettingsModel:
-    def __init__(self):
+    def __init__(self, initialise_config=False):
+        self.initialise_config = initialise_config
         self.settings_data = self.create_or_get_settings()
 
     def defaults(self):
@@ -19,6 +20,10 @@ class SettingsModel:
                     "installed": False,
                     "install_directory": ""
                 },
+                "postgis": {
+                    "installed": False,
+                    "install_directory": ""
+                },
                 "elasticsearch": {
                     "installed": False,
                     "install_directory": ""
@@ -26,7 +31,11 @@ class SettingsModel:
                 "nodejs": {
                     "installed": False,
                     "install_directory": ""
-                }
+                },
+                "gdal": {
+                    "installed": False,
+                    "install_directory": ""
+                },
             },
             "projects": [],
             "theme": "" #todo get from system default
@@ -39,7 +48,32 @@ class SettingsModel:
         else:
             with open(SYS_SETTINGS_PATH, 'r') as f:
                 file_contents = json.load(f)
+
+                # Check if existing settings is outdated & missing keys
+                if self.initialise_config:
+                    change, file_contents = self._update_existing_json_structure(file_contents)
+                    if change: self.save(file_contents)
+
         return file_contents
+
+    def _update_existing_json_structure(self, file_contents):
+        # helper function for updating an existing settings.json 
+        # file if the model structure changes.
+        default = self.defaults()
+
+        def find_diffs(default, file_contents, path=""):
+            is_change = False
+            for k in default:
+                if k in file_contents:
+                    if type(default[k]) is dict:
+                        find_diffs(default[k],file_contents[k], "%s -> %s" % (path, k) if path else k)
+                else:
+                    file_contents[k] = default[k]
+                    is_change = True
+            return is_change
+
+        result = find_diffs(default, file_contents)
+        return result, file_contents
 
     def _get_conf_vals(self, keys):
         # helper function to get values despite any nesting

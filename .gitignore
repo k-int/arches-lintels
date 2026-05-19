@@ -16,3 +16,4 @@ arches_lintels/ui/build/
 arches_lintels/ui/lintels.pro.user
 arches_lintels/ui/.qtcreator
 settings.json
+resources/

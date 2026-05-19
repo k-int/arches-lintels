@@ -5,7 +5,6 @@ from PyQt6.QtCore import QDir, QSize
 from PyQt6.QtWidgets import QMainWindow
 
 from arches_lintels.settings import APP_ROOT, VERSION
-from arches_lintels.models.settings_model import SettingsModel
 from arches_lintels.views.ui_mainwindow import Ui_MainWindow
 from arches_lintels.controllers.settings_page import SettingsPage
 
@@ -19,7 +18,6 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.settings = SettingsModel()
         self.init_ui()
 
         # controllers for individual pages
@@ -65,6 +63,8 @@ class MainWindow(QMainWindow):
         self.ui.menuButton.clicked.connect(self.navbar_menu_btn_change)
 
         # Needs to change index for both full and collapsed navbar
+        self.ui.stackedWidget.setCurrentIndex(0)
+
         self.ui.homeButtonIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
         self.ui.homeFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
         
@@ -80,12 +80,6 @@ class MainWindow(QMainWindow):
         self.ui.aboutIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
         self.ui.aboutFull.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(4))
 
-        # set starting interface
-        if not self.settings.settings_data["install_directory"]:
-            self.ui.stackedWidget.setCurrentIndex(3)
-        else:
-            self.ui.stackedWidget.setCurrentIndex(0)
-
     def navbar_menu_btn_change(self):
         if self.ui.menuButton.isChecked():
             self.ui.iconOnlyMenu.setVisible(True)
@@ -94,8 +88,7 @@ class MainWindow(QMainWindow):
             self.ui.iconOnlyMenu.setVisible(False)
             self.ui.fullMenu.setVisible(True)
 
-    def page_navigation(self):
-        self.ui.stackedWidget.setCurrentIndex(0)
+    def page_navigation(self):        
 
         # Needs to change index for both full and collapsed navbar
         self.ui.homeButtonIconOnly.clicked.connect(lambda : self.ui.stackedWidget.setCurrentIndex(0))
