@@ -11,4 +11,4 @@ SYS_SETTINGS_PATH = os.path.join(ROOT_DIR, "settings.json")
 # Postgresql database settings
 PG_USER = "postgres"
 PG_ENCODING = "UTF8"
-PG_PORT = "415432"
+PG_PORT = "45432"

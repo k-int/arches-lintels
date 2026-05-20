@@ -29,6 +29,7 @@ class ControlCentreController():
             self.default_not_installed()
 
         self.ui.postgresInstallButton.clicked.connect(self.initialise_postgres)
+        self.ui.postgresRunButton.clicked.connect(self.start_postgres)
 
     def default_installed(self):
         self.ui.postgresInstalledLabel.setText("Installed")
@@ -48,7 +49,24 @@ class ControlCentreController():
         update_widget_styling(self.ui.postgresRunningLabel, "running", "False")
 
 
+    def default_running(self):
+        update_widget_styling(self.ui.postgresRunningLabel, "running", "True")
+        self.ui.postgresRunningLabel.setText("Running")
+
+    def default_starting(self):
+        update_widget_styling(self.ui.postgresRunningLabel, "starting", "True")
+        self.ui.postgresRunningLabel.setText("Starting")
+
+    def default_not_running(self):
+        update_widget_styling(self.ui.postgresRunningLabel, "running", "False")
+        self.ui.postgresRunningLabel.setText("Not running")
+
+
     def initialise_postgres(self):
+        """
+        Initialise psql in a QProcess, call postgres model init function.
+        """
+
         initdb_exe, args = self.postgres_model.initialise_postgres()
 
         self.init_process = QProcess()
@@ -60,7 +78,8 @@ class ControlCentreController():
     def on_init_postgres_finished(self, exit_code, exit_status):
         """
         Function for the controller to call the model on_init_postgres_finished 
-        with additional UI modifications"""
+        with additional UI modifications.
+        """
         self.postgres_model.on_init_postgres_finished(exit_code, exit_status)
         if not exit_code == 0:
             self.default_not_installed()
@@ -71,11 +90,46 @@ class ControlCentreController():
         postgres_exe, args = self.postgres_model.start_postgres()
 
         self.pg_process = QProcess()
-        
-        # Keep the background process invisible (prevents a black CMD box from popping up)
-        # self.pg_process.setCreateProcessArgumentsModifier(
-        #     lambda flags: flags | 0x08000000  # CREATE_NO_WINDOW flag
-        # )
-        self.pg_process.started.connect(lambda: print("PostgreSQL is running (Green Light)."))
-        # self.pg_process.finished.connect(self.postgres_model.on_postgres_stopped)
+
+        self.pg_process.stateChanged.connect(self.pg_state_change)
+        self.pg_process.finished.connect(self.stop_postgres)
+
+        # self.pg_process.readyReadStandardError.connect(self.read_postgres_stderr)
+        # self.pg_process.readyReadStandardOutput.connect(self.read_postgres_stdout)
+        # self.pg_process.errorOccurred.connect(self.handle_process_error)
         self.pg_process.start(postgres_exe, args)
+
+    def stop_postgres(self):
+        self.default_not_running()
+
+        if self.pg_process and self.pg_process.state() == QProcess.ProcessState.Running:
+            print("Stopping PostgreSQL...")
+            self.pg_process.terminate()  # Sends a safe shutdown signal
+            
+            if not self.pg_process.waitForFinished(5000):
+                self.pg_process.kill()
+
+    def pg_state_change(self, state):
+        """Responds to changes in the database process life cycle."""
+        if state == QProcess.ProcessState.Starting:
+            # self.default_starting()
+            print("PostgreSQL is booting up... (Yellow Light)")
+
+        elif state == QProcess.ProcessState.Running:
+            self.default_running()
+            print("PostgreSQL is running successfully! (Green Light)")
+
+        elif state == QProcess.ProcessState.NotRunning:
+            self.default_not_running()
+            print("PostgreSQL has stopped. (Red Light)")
+
+    def read_postgres_stderr(self):
+        error_message = bytes(self.pg_process.readAllStandardError()).decode()
+        print(f"[Postgres STDERR]: {error_message}")
+
+    def read_postgres_stdout(self):
+        output_message = bytes(self.pg_process.readAllStandardOutput()).decode()
+        print(f"[Postgres STDOUT]: {output_message}")
+
+    def handle_process_error(self, error):
+        print(f"[QProcess Error Code]: {error}")        

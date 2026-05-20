@@ -52,16 +52,6 @@ class PostgresModel:
 
         return postgres_exe, args
 
-    # def stop_postgres(self):
-    #     """Gracefully terminates the background database process."""
-    #     if self.pg_process and self.pg_process.state() == QProcess.ProcessState.Running:
-    #         print("Stopping PostgreSQL...")
-    #         self.pg_process.terminate()  # Sends a safe shutdown signal
-            
-    #         # Wait up to 5 seconds for a clean shutdown, force kill if frozen
-    #         if not self.pg_process.waitForFinished(5000):
-    #             self.pg_process.kill()
-
     def on_postgres_stopped(self, exit_code, exit_status):
         print("PostgreSQL has stopped (Red Light).")
         self.pg_process = None
