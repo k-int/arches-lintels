@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QProcess
+from PyQt6.QtCore import QProcess, QTimer
 
 from arches_lintels.models.dependencies.elasticsearch import ElasticsearchModel
 from arches_lintels.controllers.dependencies.process_debugging import read_stderr, read_stdout, handle_process_error
@@ -16,6 +16,9 @@ class ElasticsearchController():
 
         self.elasticsearch_model = ElasticsearchModel()
 
+        self.es_timer = QTimer()
+        self.es_timer.timeout.connect(self.elasticsearch_health)
+        self.es_timer_count = 0
 
     def start_elasticsearch(self):
         primary_cmd, args, es_path = self.elasticsearch_model.start_elasticsearch()
@@ -24,8 +27,8 @@ class ElasticsearchController():
         self.es_process.setWorkingDirectory(es_path)
         self.es_process.stateChanged.connect(self.es_state_change)
         
-        # self.es_process.readyReadStandardError.connect(read_stderr)
-        # self.es_process.readyReadStandardOutput.connect(read_stdout)
+        # self.es_process.readyReadStandardError.connect(lambda: read_stderr(self.es_process))
+        # self.es_process.readyReadStandardOutput.connect(lambda: read_stdout(self.es_process))
         # self.es_process.errorOccurred.connect(handle_process_error)
 
         self.es_process.start(primary_cmd, args)
@@ -33,7 +36,19 @@ class ElasticsearchController():
     def es_state_change(self, new_state):
         if new_state == QProcess.ProcessState.Starting:
             print("Elasticsearch is waking up... (Yellow Light)")
+
         elif new_state == QProcess.ProcessState.Running:
             print("Elasticsearch cluster is alive! (Green Light)")
+            self.es_timer.start(5000)  # Check every 5 seconds
+
         elif new_state == QProcess.ProcessState.NotRunning:
             print("Elasticsearch has exited. (Red Light)")
+            self.es_timer.stop()
+
+    def elasticsearch_health(self):
+        result, self.es_timer_count = self.elasticsearch_model.elasticsearch_health(self.es_timer_count)
+        if result:
+            print("Elasticsearch connected")
+            self.es_timer.stop()
+        elif result == False:
+            self.stop_elasticsearch

@@ -14,4 +14,4 @@ PG_ENCODING = "UTF8"
 PG_PORT = "45432"
 
 # Elasticsearch settings
-ES_PORT = "49200"
+ES_PORT = 49200
