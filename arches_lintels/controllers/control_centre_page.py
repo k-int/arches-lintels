@@ -30,37 +30,65 @@ class ControlCentreController():
 
         self.ui.postgresInstallButton.clicked.connect(self.initialise_postgres)
         self.ui.postgresRunButton.clicked.connect(self.start_postgres)
+        self.ui.postgresStopButton.clicked.connect(self.stop_postgres)
 
     def default_installed(self):
         self.ui.postgresInstalledLabel.setText("Installed")
         update_widget_styling(self.ui.postgresInstalledLabel, "installed", "True")
         self.ui.postgresInstallButton.setEnabled(False)
         self.ui.postgresInstallButton.hide()
+        self.ui.postgresRunButton.show()
         self.ui.postgresRunButton.setEnabled(True)
+        self.ui.postgresStopButton.setEnabled(False)
+        self.ui.postgresStopButton.hide()
 
     def default_not_installed(self):
         self.ui.postgresInstalledLabel.setText("Not installed")
         self.ui.postgresInstallButton.show()
         self.ui.postgresInstallButton.setText("Install")
         update_widget_styling(self.ui.postgresInstalledLabel, "installed", "False")
+        # If not installed then also not running
         self.ui.postgresInstallButton.setEnabled(True)
+        self.ui.postgresRunButton.show()
         self.ui.postgresRunButton.setEnabled(False)
         self.ui.postgresRunningLabel.setText("Not running")
         update_widget_styling(self.ui.postgresRunningLabel, "running", "False")
-
+        self.ui.postgresStopButton.setEnabled(False)
+        self.ui.postgresStopButton.hide()
 
     def default_running(self):
+        """
+        When running the start button should be hidden and the stop button visible.
+        """
         update_widget_styling(self.ui.postgresRunningLabel, "running", "True")
         self.ui.postgresRunningLabel.setText("Running")
+        self.ui.postgresRunButton.setEnabled(False)
+        self.ui.postgresRunButton.hide()
+        self.ui.postgresStopButton.setEnabled(True)
+        self.ui.postgresStopButton.show()
 
     def default_starting(self):
+        """
+        When starting the stop button should be visible but disabled, the start button
+        should be hidden and disabled.
+        """
         update_widget_styling(self.ui.postgresRunningLabel, "starting", "True")
         self.ui.postgresRunningLabel.setText("Starting")
+        self.ui.postgresRunButton.setEnabled(False)
+        self.ui.postgresRunButton.hide()
+        self.ui.postgresStopButton.setEnabled(False)
+        self.ui.postgresStopButton.show()
 
     def default_not_running(self):
+        """
+        When not running the start button should be visible and stop hidden.
+        """
         update_widget_styling(self.ui.postgresRunningLabel, "running", "False")
         self.ui.postgresRunningLabel.setText("Not running")
-
+        self.ui.postgresRunButton.setEnabled(True)
+        self.ui.postgresRunButton.show()
+        self.ui.postgresStopButton.setEnabled(False)
+        self.ui.postgresStopButton.hide()
 
     def initialise_postgres(self):
         """
