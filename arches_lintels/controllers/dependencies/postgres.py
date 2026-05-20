@@ -13,7 +13,6 @@ class PostgresController():
         super().__init__()
         self.ui = ui
 
-        # dependencies
         self.postgres_model = PostgresModel()
 
         # TODO: Change this to look at settings.json rather than the path existing

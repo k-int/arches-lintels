@@ -329,14 +329,35 @@
                <item>
                 <widget class="QLabel" name="elasticInstalledLabel">
                  <property name="text">
-                  <string/>
+                  <string>installed light</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="elasticInstallButton">
+                 <property name="text">
+                  <string>Install</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QLabel" name="elasticStartLabel">
                  <property name="text">
-                  <string/>
+                  <string>running light</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="elasticStartButton">
+                 <property name="text">
+                  <string>Start</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="elasticStopButton">
+                 <property name="text">
+                  <string>Stop</string>
                  </property>
                 </widget>
                </item>
