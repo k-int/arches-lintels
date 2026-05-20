@@ -242,7 +242,7 @@
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer_2">
+                <spacer name="horizontalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -257,19 +257,33 @@
                <item>
                 <widget class="QLabel" name="postgresInstalledLabel">
                  <property name="text">
-                  <string/>
+                  <string>installed light</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="postgresStartLabel">
+                <widget class="QPushButton" name="postgresInstallButton">
                  <property name="text">
-                  <string/>
+                  <string>Install</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer_7">
+                <widget class="QLabel" name="postgresRunningLabel">
+                 <property name="text">
+                  <string>running light</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="postgresRunButton">
+                 <property name="text">
+                  <string>Start</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>

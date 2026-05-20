@@ -104,3 +104,11 @@ QComboBox {
 #postgresInstalledLabel[installed="False"] {
     color: red;
 }
+
+#postgresRunningLabel[running="True"] {
+    color: green;
+}
+
+#postgresRunningLabel[running="False"] {
+    color: red;
+}

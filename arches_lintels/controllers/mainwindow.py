@@ -1,7 +1,7 @@
 import os
 
 from PyQt6.QtGui import QIcon
-from PyQt6.QtCore import QDir, QSize, QProcess
+from PyQt6.QtCore import QDir, QSize
 from PyQt6.QtWidgets import QMainWindow
 
 from arches_lintels.settings import APP_ROOT, VERSION
@@ -26,10 +26,6 @@ class MainWindow(QMainWindow):
         self.settings_controller = SettingsPage(self.ui)
         self.control_centre_controller = ControlCentreController(self.ui)
 
-        # dependencies
-        self.postgres_model = PostgresModel()
-        if not self.postgres_model.pg_init_check():
-            self.initialise_postgres()
 
     def init_ui(self):
         QDir.addSearchPath("img", os.path.join(APP_ROOT, "img"))
@@ -126,11 +122,3 @@ class MainWindow(QMainWindow):
             self.ui.iconOnlyMenu.setVisible(False)
             self.ui.fullMenu.setVisible(True)
 
-    def initialise_postgres(self):
-        initdb_exe, args = self.postgres_model.initialise_postgres()
-
-        self.init_process = QProcess(self)
-        self.init_process.start(initdb_exe, args)
-        self.init_process.finished.connect(
-            self.postgres_model.on_init_postgres_finished
-        )
