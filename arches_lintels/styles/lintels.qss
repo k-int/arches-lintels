@@ -86,13 +86,21 @@ QComboBox {
     color: #fff;
 }
 
-/* Settings page */
 
-#settingsTitle {
+/* Shared across pages */
+#settingsTitle, #controlCentreTitle {
     font-weight: 600;
     font-size: 16px;
 }
 
 #uiLabel, #installDirsLabel {
     font-weight: 600;
+}
+
+#postgresInstalledLabel[installed="True"] {
+    color: green;
+}
+
+#postgresInstalledLabel[installed="False"] {
+    color: red;
 }

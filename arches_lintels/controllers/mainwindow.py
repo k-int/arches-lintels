@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import QMainWindow
 from arches_lintels.settings import APP_ROOT, VERSION
 from arches_lintels.views.ui_mainwindow import Ui_MainWindow
 from arches_lintels.controllers.settings_page import SettingsPage
-
+from arches_lintels.controllers.control_centre_page import ControlCentreController
 from arches_lintels.models.dependencies.postgres import PostgresModel
 
 
@@ -24,6 +24,7 @@ class MainWindow(QMainWindow):
 
         # controllers for individual pages
         self.settings_controller = SettingsPage(self.ui)
+        self.control_centre_controller = ControlCentreController(self.ui)
 
         # dependencies
         self.postgres_model = PostgresModel()
