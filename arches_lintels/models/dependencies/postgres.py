@@ -19,7 +19,11 @@ class PostgresModel:
 
     def pg_init_check(self):
         data_dir = self.get_pg_data_path()
-        return os.path.exists(os.path.join(data_dir, "PG_VERSION"))
+        exist_check = os.path.exists(os.path.join(data_dir, "PG_VERSION"))
+        # if data/PG_VERSION doesn't exist then tell settings psql is not installed
+        if not exist_check:
+            self.settings_model.update_value(["dependencies","postgres","installed"], False)
+        return exist_check
 
     def initialise_postgres(self):
         initdb_exe = os.path.join(self.get_pg_bin_path(), "initdb.exe")
