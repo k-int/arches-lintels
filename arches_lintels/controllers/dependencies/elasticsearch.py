@@ -33,6 +33,18 @@ class ElasticsearchController():
 
         self.es_process.start(primary_cmd, args)
 
+    def stop_elasticsearch(self):
+        if self.es_process:
+            pid = self.es_process.processId()
+            command, args = self.elasticsearch_model.stop_elasticsearch(pid)
+            self.stop_es_process = QProcess()
+            self.stop_es_process.start(command, args)
+            self.stop_es_process.waitForFinished(3000)
+            # Now we can kill both processes
+            self.stop_es_process.kill()
+            self.es_process.kill()
+
+
     def es_state_change(self, new_state):
         if new_state == QProcess.ProcessState.Starting:
             print("Elasticsearch is waking up... (Yellow Light)")

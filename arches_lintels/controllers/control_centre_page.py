@@ -22,4 +22,4 @@ class ControlCentreController():
         self.ui.postgresStopButton.clicked.connect(self.postgres_controller.stop_postgres)
 
         self.ui.elasticStartButton.clicked.connect(self.elasticsearch_controller.start_elasticsearch)
-        # self.ui.elasticStopButton.clicked.connect(self.elasticsearch_controller.stop_elasticsearch)
+        self.ui.elasticStopButton.clicked.connect(self.elasticsearch_controller.stop_elasticsearch)

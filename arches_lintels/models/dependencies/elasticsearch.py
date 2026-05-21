@@ -38,6 +38,38 @@ class ElasticsearchModel():
 
         return primary_cmd, args, self.elasticsearch_path
 
+    def stop_elasticsearch(self, pid):
+        command = "taskkill"
+        args = ["/F", "/T", "/PID", str(pid)]
+
+        return command, args
+        if self.es_process and self.es_process.state() == QProcess.ProcessState.Running:
+            print("Initiating Elasticsearch process tree teardown...")
+            
+            # Stop our polling timer immediately if it's still running
+            self.es_poll_timer.stop()
+            
+            # Extract the native Windows Process ID assigned to our QProcess
+            pid = self.es_process.processId()
+            
+            # Fire up an atomic taskkill command to wipe out the parent and child components
+            killer_process = QProcess(self.view)
+            killer_process.setCreateProcessArgumentsModifier(lambda flags: flags | 0x08000000)
+            
+            # /F = Force termination, /T = Kill process tree (cmd.exe + java.exe)
+            killer_process.start("taskkill", ["/F", "/T", "/PID", str(pid)])
+            killer_process.waitForFinished(3000) # Give it 3 seconds to clear execution
+            
+            self.es_process = None
+        else:
+            print("Elasticsearch is not currently active.")
+
+    def closeEvent(self, event):
+        """Ensures both Postgres and ES are systematically expunged on app close."""
+        # self.stop_postgres()
+        self.stop_elasticsearch()
+        event.accept()
+
     def elasticsearch_health(self, count):
         url = f"http://localhost:{ES_PORT}"
         count +=1
