@@ -1,0 +1,70 @@
+from arches_lintels.controllers.utils.update_widget_styling import update_widget_styling
+
+
+class DependencyUIUpdates:
+    def __init__(
+        self, install_label, install_button, start_button, stop_button, running_label
+    ):
+        self.install_label = install_label
+        self.install_button = install_button
+        self.start_button = start_button
+        self.stop_button = stop_button
+        self.running_label = running_label
+
+    def default_installed(self):
+        self.install_label.setText("Installed")
+        update_widget_styling(self.install_label, "installed", "True")
+        self.install_button.setEnabled(False)
+        self.install_button.hide()
+        self.start_button.show()
+        self.start_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+        self.stop_button.hide()
+
+    def default_not_installed(self):
+        self.install_label.setText("Not installed")
+        self.install_button.show()
+        self.install_button.setText("Install")
+        update_widget_styling(self.install_label, "installed", "False")
+        # If not installed then also not running
+        self.install_button.setEnabled(True)
+        self.start_button.show()
+        self.start_button.setEnabled(False)
+        self.running_label.setText("Not running")
+        update_widget_styling(self.running_label, "running", "False")
+        self.stop_button.setEnabled(False)
+        self.stop_button.hide()
+
+    def default_running(self):
+        """
+        When running the start button should be hidden and the stop button visible.
+        """
+        update_widget_styling(self.running_label, "running", "True")
+        self.running_label.setText("Running")
+        self.start_button.setEnabled(False)
+        self.start_button.hide()
+        self.stop_button.setEnabled(True)
+        self.stop_button.show()
+
+    def default_starting(self):
+        """
+        When starting the stop button should be visible but disabled, the start button
+        should be hidden and disabled.
+        """
+        update_widget_styling(self.running_label, "starting", "True")
+        self.running_label.setText("Starting")
+        self.start_button.setEnabled(False)
+        self.start_button.hide()
+        self.stop_button.setEnabled(False)
+        self.stop_button.show()
+
+    def default_not_running(self):
+        """
+        When not running the start button should be visible and stop hidden.
+        """
+        update_widget_styling(self.running_label, "running", "False")
+        self.running_label.setText("Not running")
+        self.start_button.setEnabled(True)
+        self.start_button.show()
+        self.stop_button.setEnabled(False)
+        self.stop_button.hide()
