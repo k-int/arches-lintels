@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QProcess, QTimer
 
 from arches_lintels.models.dependencies.elasticsearch import ElasticsearchModel
-from arches_lintels.controllers.dependencies.process_debugging import read_stderr, read_stdout, handle_process_error
+from arches_lintels.controllers.utils.process_debugging import read_stderr, read_stdout, handle_process_error
 from arches_lintels.controllers.utils.update_widget_styling import update_widget_styling
 
 
@@ -60,7 +60,9 @@ class ElasticsearchController():
     def elasticsearch_health(self):
         result, self.es_timer_count = self.elasticsearch_model.elasticsearch_health(self.es_timer_count)
         if result:
-            print("Elasticsearch connected")
+            # Elasticsearch has connected and is ready to use
             self.es_timer.stop()
+
+
         elif result == False:
             self.stop_elasticsearch
