@@ -43,26 +43,6 @@ class ElasticsearchModel():
         args = ["/F", "/T", "/PID", str(pid)]
 
         return command, args
-        if self.es_process and self.es_process.state() == QProcess.ProcessState.Running:
-            print("Initiating Elasticsearch process tree teardown...")
-            
-            # Stop our polling timer immediately if it's still running
-            self.es_poll_timer.stop()
-            
-            # Extract the native Windows Process ID assigned to our QProcess
-            pid = self.es_process.processId()
-            
-            # Fire up an atomic taskkill command to wipe out the parent and child components
-            killer_process = QProcess(self.view)
-            killer_process.setCreateProcessArgumentsModifier(lambda flags: flags | 0x08000000)
-            
-            # /F = Force termination, /T = Kill process tree (cmd.exe + java.exe)
-            killer_process.start("taskkill", ["/F", "/T", "/PID", str(pid)])
-            killer_process.waitForFinished(3000) # Give it 3 seconds to clear execution
-            
-            self.es_process = None
-        else:
-            print("Elasticsearch is not currently active.")
 
     def closeEvent(self, event):
         """Ensures both Postgres and ES are systematically expunged on app close."""
@@ -71,6 +51,11 @@ class ElasticsearchModel():
         event.accept()
 
     def elasticsearch_health(self, count):
+        """
+        Pings the localhost elasticsearch endpoint to assess service health.
+        Returns True if the endpoint is reachable, False if fails to reach after 
+        self.max_retries is reached, or None if in retry phase.
+        """
         url = f"http://localhost:{ES_PORT}"
         count +=1
 
@@ -82,6 +67,7 @@ class ElasticsearchModel():
             print(f"Attempt {count}/{self.max_retries}...")
         
         if count >= self.max_retries:
+            print(f"Maximum number of attempts made ({self.max_retries}), stopping service.")
             return False, count
 
         return None, count

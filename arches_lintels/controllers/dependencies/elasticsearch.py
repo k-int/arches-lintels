@@ -59,10 +59,8 @@ class ElasticsearchController():
 
     def elasticsearch_health(self):
         result, self.es_timer_count = self.elasticsearch_model.elasticsearch_health(self.es_timer_count)
-        if result:
-            # Elasticsearch has connected and is ready to use
+        if result in [False, True]:
+            if result == False:
+                self.stop_elasticsearch()
             self.es_timer.stop()
-
-
-        elif result == False:
-            self.stop_elasticsearch
+            self.es_timer_count = 0
