@@ -97,22 +97,27 @@ QComboBox {
     font-weight: 600;
 }
 
-#postgresInstalledLabel[installed="True"] {
+#postgresInstalledLabel[state="installed"],
+#elasticInstalledLabel[state="installed"] {
     color: green;
 }
 
-#postgresInstalledLabel[installed="False"] {
+#postgresInstalledLabel[state="not_installed"],
+#elasticInstalledLabel[state="not_installed"] {
     color: red;
 }
 
-#postgresRunningLabel[running="True"] {
+#postgresRunningLabel[state="running"],
+#elasticRunningLabel[state="running"]  {
     color: green;
 }
 
-#postgresRunningLabel[running="False"] {
+#postgresRunningLabel[state="not_running"],
+#elasticRunningLabel[state="not_running"] {
     color: red;
 }
 
-#postgresRunningLabel[starting="True"] {
+#postgresRunningLabel[state="starting"],
+#elasticRunningLabel[state="starting"] {
     color: orange;
 }

@@ -341,7 +341,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="elasticStartLabel">
+                <widget class="QLabel" name="elasticRunningLabel">
                  <property name="text">
                   <string>running light</string>
                  </property>

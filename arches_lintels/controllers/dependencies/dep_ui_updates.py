@@ -13,11 +13,13 @@ class DependencyUIUpdates:
 
     def default_installed(self):
         self.install_label.setText("Installed")
-        update_widget_styling(self.install_label, "installed", "True")
+        update_widget_styling(self.install_label, "state", "installed")
         self.install_button.setEnabled(False)
         self.install_button.hide()
         self.start_button.show()
         self.start_button.setEnabled(True)
+        self.running_label.setText("Not running")
+        update_widget_styling(self.running_label, "state", "not_running")
         self.stop_button.setEnabled(False)
         self.stop_button.hide()
 
@@ -25,13 +27,13 @@ class DependencyUIUpdates:
         self.install_label.setText("Not installed")
         self.install_button.show()
         self.install_button.setText("Install")
-        update_widget_styling(self.install_label, "installed", "False")
+        update_widget_styling(self.install_label, "state", "not_installed")
         # If not installed then also not running
         self.install_button.setEnabled(True)
         self.start_button.show()
         self.start_button.setEnabled(False)
         self.running_label.setText("Not running")
-        update_widget_styling(self.running_label, "running", "False")
+        update_widget_styling(self.running_label, "state", "not_running")
         self.stop_button.setEnabled(False)
         self.stop_button.hide()
 
@@ -39,7 +41,7 @@ class DependencyUIUpdates:
         """
         When running the start button should be hidden and the stop button visible.
         """
-        update_widget_styling(self.running_label, "running", "True")
+        update_widget_styling(self.running_label, "state", "running")
         self.running_label.setText("Running")
         self.start_button.setEnabled(False)
         self.start_button.hide()
@@ -51,7 +53,7 @@ class DependencyUIUpdates:
         When starting the stop button should be visible but disabled, the start button
         should be hidden and disabled.
         """
-        update_widget_styling(self.running_label, "starting", "True")
+        update_widget_styling(self.running_label, "state", "starting")
         self.running_label.setText("Starting")
         self.start_button.setEnabled(False)
         self.start_button.hide()
@@ -62,9 +64,21 @@ class DependencyUIUpdates:
         """
         When not running the start button should be visible and stop hidden.
         """
-        update_widget_styling(self.running_label, "running", "False")
+        update_widget_styling(self.running_label, "state", "not_running")
         self.running_label.setText("Not running")
         self.start_button.setEnabled(True)
         self.start_button.show()
         self.stop_button.setEnabled(False)
         self.stop_button.hide()
+
+    def default_stopping(self):
+        """
+        When stopping the start button should be hidden and stop visible but disabled.
+        """
+        self.running_label.setText("Stopping")
+        update_widget_styling(self.running_label, "state", "not_running")
+        self.start_button.setEnabled(False)
+        self.start_button.hide()
+        self.stop_button.setEnabled(False)
+        self.stop_button.show()
+
