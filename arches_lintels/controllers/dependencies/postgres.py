@@ -22,8 +22,9 @@ class PostgresController():
 
         self.postgres_model = PostgresModel()
 
-        # TODO: Change this to look at settings.json rather than the path existing
-        if self.postgres_model.pg_init_check():
+        postgis_installed = self.postgres_model.postgis_bundled_check()
+        psql_installed = self.postgres_model.pg_init_check()
+        if psql_installed:
             self.dep_ui_updates.default_installed()
         else:
             self.dep_ui_updates.default_not_installed()
@@ -32,7 +33,6 @@ class PostgresController():
         """
         Initialise psql in a QProcess, call postgres model init function.
         """
-        print("init postgres")
         initdb_exe, args = self.postgres_model.initialise_postgres()
 
         self.init_process = QProcess()

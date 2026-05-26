@@ -237,7 +237,7 @@
                <item>
                 <widget class="QLabel" name="label_11">
                  <property name="text">
-                  <string>PostgreSQL / PostGIS</string>
+                  <string>PostgreSQL</string>
                  </property>
                 </widget>
                </item>
@@ -291,6 +291,57 @@
                </item>
                <item>
                 <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="ccPostgisLayout">
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>PostGIS</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_8">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="postgisBundledLabel">
+                 <property name="text">
+                  <string>bundled light</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="postgisInstalledLabel">
+                 <property name="text">
+                  <string>installed light</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_9">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>
@@ -435,57 +486,6 @@
                </item>
                <item>
                 <spacer name="horizontalSpacer_11">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>text</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_15">
-                 <property name="text">
-                  <string>installed light</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_3">
-                 <property name="text">
-                  <string>Install</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_9">
                  <property name="orientation">
                   <enum>Qt::Orientation::Horizontal</enum>
                  </property>

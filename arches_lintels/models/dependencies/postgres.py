@@ -26,11 +26,13 @@ class PostgresModel:
 
     def pg_init_check(self):
         data_dir = self.get_pg_data_path()
-        exist_check = os.path.exists(os.path.join(data_dir, "PG_VERSION"))
+        exists = os.path.exists(os.path.join(data_dir, "PG_VERSION"))
         # if data/PG_VERSION doesn't exist then tell settings psql is not installed
-        if not exist_check:
-            self.settings_model.update_value(["dependencies","postgres","installed"], False)
-        return exist_check
+        self.settings_model.update_value(["dependencies","postgres","installed"], exists)
+        # if it doesn't exist, set postgis installed to false
+        if not exists:
+            self.settings_model.update_value(["dependencies","postgis","installed"], False)
+        return exists
 
     def initialise_postgres(self):
         initdb_exe = os.path.join(self.get_pg_bin_path(), "initdb.exe")
@@ -119,5 +121,10 @@ class PostgresModel:
             print(f"PostGIS initialisation failed with exit code: {exit_code}: {exit_status}")
             self.settings_model.update_value(["dependencies","postgis","installed"], False)
 
-    def postgis_install_check(self):
-        return self.settings_model.get_config_value(["dependencies","postgis","installed"])
+    def postgis_bundled_check(self):
+        """
+        Checks if the PostGIS extension is bundled in the current PSQL installation.
+        """
+        exists = os.path.exists(os.path.join(self.postgres_path, "pgsql", "lib", "postgis-3.dll"))
+        self.settings_model.update_value(["dependencies","postgis","bundled"], exists)
+        return exists
