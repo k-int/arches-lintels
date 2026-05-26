@@ -9,6 +9,7 @@ class PostgresModel:
     def __init__(self):
         self.settings_model = SettingsModel()
         self.postgres_path = self.settings_model.get_config_value(["dependencies","postgres","install_directory"])
+        self.postgis_path = self.settings_model.get_config_value(["dependencies","postgis","install_directory"])
 
     def get_pg_bin_path(self):
         # todo need some os.path.exists() alerts here
@@ -16,6 +17,12 @@ class PostgresModel:
 
     def get_pg_data_path(self):
         return os.path.join(self.postgres_path, "pgsql", "data")
+
+    def get_pg_createdb_path(self):
+        return os.path.join(self.get_pg_bin_path(), "createdb.exe")
+
+    def get_psql_path(self):
+        return os.path.join(self.get_pg_bin_path(), "psql.exe")
 
     def pg_init_check(self):
         data_dir = self.get_pg_data_path()
@@ -38,7 +45,8 @@ class PostgresModel:
             print("PostgreSQL initialised successfully")
             self.settings_model.update_value(["dependencies","postgres","installed"], True)
         else:
-            print(f"PostgreSQL initialisation failed with exit code: {exit_code}")
+            print(f"PostgreSQL initialisation failed with exit code: {exit_code}: {exit_status}")
+            self.settings_model.update_value(["dependencies","postgres","installed"], False)
 
     def start_postgres(self):
         if not self.pg_init_check():
@@ -59,4 +67,57 @@ class PostgresModel:
     def closeEvent(self, event):
         """Overrides the window exit event to ensure we don't leave zombie databases."""
         self.stop_postgres()
-        event.accept()            
+        event.accept()
+
+    def load_postgis_extension(self):
+        """
+        PSQL commands for loading the PostGIS extension.
+        Note this uses the following commands from the Arches ubuntu install script:
+            sudo -u postgres createdb -E UTF8 -T template0 --locale=en_US.utf8 template_postgis
+            sudo -u postgres psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis'"
+            sudo -u postgres psql -d template_postgis -c "CREATE EXTENSION postgis;"
+            sudo -u postgres psql -d template_postgis -c "CREATE EXTENSION \"uuid-ossp\";"
+            sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+            sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
+            sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+        """
+        
+        createdb_exe = self.get_pg_createdb_path()
+        psql_exe = self.get_psql_path()
+        create_args = [
+            "-U", "postgres",
+            "-p", PG_PORT,
+            "-E", "UTF8",
+            "-T", "template0",
+            "template_postgis"
+        ]
+        template_set_args = [
+            "-U", "postgres",
+            "-p", PG_PORT,
+            "-d", "postgres",
+            "-c", "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
+        ]
+        postgis_args = [
+            "-U", "postgres",
+            "-p", PG_PORT,
+            "-T", "template_postgis",
+            "-c", (
+                "CREATE EXTENSION IF NOT EXISTS postgis; "
+                "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"; "
+                "GRANT ALL ON geometry_columns TO PUBLIC; "
+                "GRANT ALL ON geography_columns TO PUBLIC; "
+                "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+            )
+        ]
+        return createdb_exe, psql_exe, create_args, template_set_args, postgis_args
+    
+    def on_init_postgis_finished(self, exit_code, exit_status):
+        if exit_code == 0:
+            print("PostGIS initialised successfully")
+            self.settings_model.update_value(["dependencies","postgis","installed"], True)
+        else:
+            print(f"PostGIS initialisation failed with exit code: {exit_code}: {exit_status}")
+            self.settings_model.update_value(["dependencies","postgis","installed"], False)
+
+    def postgis_install_check(self):
+        return self.settings_model.get_config_value(["dependencies","postgis","installed"])

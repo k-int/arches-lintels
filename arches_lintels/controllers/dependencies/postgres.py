@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QProcess
 
 from arches_lintels.models.dependencies.postgres import PostgresModel
-from arches_lintels.controllers.utils.update_widget_styling import update_widget_styling
+from arches_lintels.controllers.utils.process_debugging import read_stderr, read_stdout, handle_process_error
 from arches_lintels.controllers.dependencies.dep_ui_updates import DependencyUIUpdates
 
 class PostgresController():
@@ -32,7 +32,7 @@ class PostgresController():
         """
         Initialise psql in a QProcess, call postgres model init function.
         """
-
+        print("init postgres")
         initdb_exe, args = self.postgres_model.initialise_postgres()
 
         self.init_process = QProcess()
@@ -51,6 +51,35 @@ class PostgresController():
             self.dep_ui_updates.default_not_installed()
         self.dep_ui_updates.default_installed()
 
+    def initialise_postgis_extension(self):
+        def _additional_commands(exit_code, exit_status):
+            print("additionals")
+            if not exit_code == 0:
+                print(f"failed with exit code: {exit_code}: {exit_status}")
+                return
+            self.init_postgis_process = QProcess()
+            self.init_postgis_process.start(psql_exe, postgis_args)
+            self.init_postgis_process.finished.connect(self.on_init_postgis_finished)
+
+        def _template_set(exit_code, exit_status):
+            if not exit_code == 0:
+                print(f"failed with exit code: {exit_code}: {exit_status}")
+                return            
+            self.init_postgis_process = QProcess()
+            self.init_postgis_process.start(psql_exe, template_set_args)
+            self.init_postgis_process.finished.connect(_additional_commands)
+
+        created_exe, psql_exe, create_args, template_set_args, postgis_args = self.postgres_model.load_postgis_extension()
+
+        self.init_postgis_process = QProcess()
+        self.init_postgis_process.start(created_exe, create_args)
+        self.init_postgis_process.finished.connect(_template_set)
+
+    def on_init_postgis_finished(self, exit_code, exit_status):
+        self.postgres_model.on_init_postgis_finished(exit_code, exit_status)
+        if not exit_code == 0:
+            self.dep_ui_updates.default_not_installed()
+        self.dep_ui_updates.default_installed()
 
     def start_postgres(self):
         postgres_exe, args = self.postgres_model.start_postgres()
@@ -78,12 +107,14 @@ class PostgresController():
     def pg_state_change(self, state):
         """Responds to changes in the database process life cycle."""
         if state == QProcess.ProcessState.Starting:
-            # self.dep_ui_updates.default_starting()
+            self.dep_ui_updates.default_starting()
             print("PostgreSQL is booting up... (Yellow Light)")
 
         elif state == QProcess.ProcessState.Running:
-            self.dep_ui_updates.default_running()
             print("PostgreSQL is running successfully! (Green Light)")
+            if not self.postgres_model.postgis_install_check():
+                self.initialise_postgis_extension()
+            self.dep_ui_updates.default_running()    
 
         elif state == QProcess.ProcessState.NotRunning:
             self.dep_ui_updates.default_not_running()
