@@ -8,7 +8,7 @@ from arches_lintels.settings import APP_ROOT, VERSION
 from arches_lintels.views.ui_mainwindow import Ui_MainWindow
 from arches_lintels.controllers.settings_page import SettingsPage
 from arches_lintels.controllers.control_centre_page import ControlCentreController
-from arches_lintels.models.dependencies.postgres import PostgresModel
+from arches_lintels.controllers.arches_manager import ArchesManagerController
 
 
 class MainWindow(QMainWindow):
@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
         # controllers for individual pages
         self.settings_controller = SettingsPage(self.ui)
         self.control_centre_controller = ControlCentreController(self.ui)
-
+        self.arches_manager_controller = ArchesManagerController(self.ui)
 
     def init_ui(self):
         QDir.addSearchPath("img", os.path.join(APP_ROOT, "img"))

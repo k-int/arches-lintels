@@ -88,7 +88,9 @@ QComboBox {
 
 
 /* Shared across pages */
-#settingsTitle, #controlCentreTitle {
+#settingsTitle, 
+#controlCentreTitle,
+#archesManagerLabel {
     font-weight: 600;
     font-size: 16px;
 }
@@ -97,7 +99,8 @@ QComboBox {
 #installDirsLabel, 
 #installedTitleLabel,
 #runningTitleLabel,
-#actionsLabel {
+#actionsLabel,
+#activeProjectsLabel {
     font-weight: 600;
 }
 
