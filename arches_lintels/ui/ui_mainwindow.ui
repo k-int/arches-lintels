@@ -222,209 +222,177 @@
           </widget>
          </widget>
          <widget class="QWidget" name="controlCentrePage">
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="1" column="1">
+            <widget class="QLabel" name="installedTitleLabel">
+             <property name="text">
+              <string>Installed</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="actionsLabel">
+             <property name="text">
+              <string>Actions</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLabel" name="postgisInstalledLabel">
+             <property name="text">
+              <string>installed light</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="depPostgisTitleLabel">
+             <property name="text">
+              <string>PostGIS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="nodeInstalledLabel">
+             <property name="text">
+              <string>installed light (node)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="depPsqlTitleLabel">
+             <property name="text">
+              <string>PostgreSQL</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QLabel" name="nodeRunningLabel">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="elasticInstalledLabel">
+             <property name="text">
+              <string>installed light (es)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
             <widget class="QLabel" name="controlCentreTitle">
              <property name="text">
               <string>Control centre</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="runningTitleLabel">
+             <property name="text">
+              <string>Running</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="depEmptyTitle">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="postgresRunningLabel">
+             <property name="text">
+              <string>running light</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="depEsTitleLabel">
+             <property name="text">
+              <string>Elasticsearch</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="postgisBundledLabel">
+             <property name="text">
+              <string>bundled light (postgis)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLabel" name="elasticRunningLabel">
+             <property name="text">
+              <string>running light</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="postgresInstalledLabel">
+             <property name="text">
+              <string>installed light (psql)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="depNodeTitleLabel">
+             <property name="text">
+              <string>NodeJS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <layout class="QVBoxLayout" name="depTitles">
-               <item>
-                <widget class="QLabel" name="depEmptyTitle">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="depPsqlTitleLabel">
-                 <property name="text">
-                  <string>PostgreSQL</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="depPostgisTitleLabel">
-                 <property name="text">
-                  <string>PostGIS</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="depEsTitleLabel">
-                 <property name="text">
-                  <string>Elasticsearch</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="depNodeTitleLabel">
-                 <property name="text">
-                  <string>NodeJS</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <widget class="QPushButton" name="elasticInstallButton">
+               <property name="text">
+                <string>Install</string>
+               </property>
+              </widget>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="depInstalledLabels">
-               <item>
-                <widget class="QLabel" name="installedTitleLabel">
-                 <property name="text">
-                  <string>Installed</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="postgresInstalledLabel">
-                 <property name="text">
-                  <string>installed light (psql)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="postgisBundledLabel">
-                 <property name="text">
-                  <string>bundled light (postgis)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="elasticInstalledLabel">
-                 <property name="text">
-                  <string>installed light (es)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="nodeInstalledLabel">
-                 <property name="text">
-                  <string>installed light (node)</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <widget class="QPushButton" name="elasticStopButton">
+               <property name="text">
+                <string>Stop</string>
+               </property>
+              </widget>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_11">
-               <item>
-                <widget class="QLabel" name="runningTitleLabel">
-                 <property name="text">
-                  <string>Running</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="postgresRunningLabel">
-                 <property name="text">
-                  <string>running light</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="postgisInstalledLabel">
-                 <property name="text">
-                  <string>installed light</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="elasticRunningLabel">
-                 <property name="text">
-                  <string>running light</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="nodeRunningLabel">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="depPostgresButtonLayout">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="postgresInstallButton">
-                   <property name="text">
-                    <string>Install</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="postgresRunButton">
-                   <property name="text">
-                    <string>Start</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="postgresStopButton">
-                   <property name="text">
-                    <string>Stop</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_7"/>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="depEsButtonLayout">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="elasticInstallButton">
-                   <property name="text">
-                    <string>Install</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="elasticStartButton">
-                   <property name="text">
-                    <string>Start</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="elasticStopButton">
-                   <property name="text">
-                    <string>Stop</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_6"/>
-               </item>
-              </layout>
+              <widget class="QPushButton" name="elasticStartButton">
+               <property name="text">
+                <string>Start</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
-           <item>
+           <item row="2" column="3">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QPushButton" name="postgresInstallButton">
+               <property name="text">
+                <string>Install</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="postgresRunButton">
+               <property name="text">
+                <string>Start</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="postgresStopButton">
+               <property name="text">
+                <string>Stop</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="7" column="0">
             <spacer name="verticalSpacer_4">
              <property name="orientation">
               <enum>Qt::Orientation::Vertical</enum>

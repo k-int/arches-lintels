@@ -128,3 +128,9 @@ class PostgresModel:
         exists = os.path.exists(os.path.join(self.postgres_path, "pgsql", "lib", "postgis-3.dll"))
         self.settings_model.update_value(["dependencies","postgis","bundled"], exists)
         return exists
+
+    def postgis_install_check(self):
+        """
+        Checks if the PostGIS extension is installed in the current db.
+        """
+        return self.settings_model.get_config_value(["dependencies","postgis","installed"])

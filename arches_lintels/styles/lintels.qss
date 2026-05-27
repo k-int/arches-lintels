@@ -96,7 +96,8 @@ QComboBox {
 #uiLabel, 
 #installDirsLabel, 
 #installedTitleLabel,
-#runningTitleLabel {
+#runningTitleLabel,
+#actionsLabel {
     font-weight: 600;
 }
 
@@ -124,3 +125,4 @@ QComboBox {
 #elasticRunningLabel[state="starting"] {
     color: orange;
 }
+
