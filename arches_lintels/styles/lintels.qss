@@ -93,7 +93,10 @@ QComboBox {
     font-size: 16px;
 }
 
-#uiLabel, #installDirsLabel {
+#uiLabel, 
+#installDirsLabel, 
+#installedTitleLabel,
+#runningTitleLabel {
     font-weight: 600;
 }
 
