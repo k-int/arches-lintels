@@ -326,7 +326,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="createArchesProjectButton">
                <property name="text">
                 <string>New project</string>
                </property>

@@ -1,7 +1,9 @@
+import sys
+
 from functools import partial
 
-from arches_lintels.models.settings_model import SettingsModel
 from arches_lintels.models.arches_model import ArchesModel
+from arches_lintels.controllers.components.create_arches_project import CreateArchesProjectDialog
 
 
 class ArchesManagerController:
@@ -15,6 +17,9 @@ class ArchesManagerController:
         self.arches_model = ArchesModel()
 
         self.init_projects_ui()
+
+        self.ui.createArchesProjectButton.disconnect()
+        self.ui.createArchesProjectButton.clicked.connect(self.create_project)
         
     def init_projects_ui(self):
         if len(self.arches_model.get_projects()) > 0:
@@ -23,3 +28,8 @@ class ArchesManagerController:
         else:
             self.ui.noActiveProjectsLayout.show()
             self.ui.projectsLayout.hide()
+
+    def create_project(self):
+        print("CLICKED")
+        self.create_project_dialog = CreateArchesProjectDialog()
+        self.create_project_dialog.exec()

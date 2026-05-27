@@ -15,3 +15,18 @@ PG_PORT = "45432"
 
 # Elasticsearch settings
 ES_PORT = 49200
+
+ARCHES_VERSIONS = [
+    "7.6",
+    "8.0",
+    "8.1",
+]
+
+ARCHES_APPS = [
+    "arches_her",
+    "arches_for_science",
+    "arches_controlled_lists",
+    "arches_lingo",
+    "arches_component_lab",
+    "arches_querysets"
+]

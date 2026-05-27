@@ -1,4 +1,4 @@
-QWidget, QLabel, QPushButton, QLineEdit {
+* {
     font-family: "Open Sans";
 }
 
@@ -32,6 +32,7 @@ QComboBox {
 #MainWindow {
     background-color: #fff;
 }
+
 #menuButton {
     padding: 5px;
     border: none;
@@ -129,3 +130,7 @@ QComboBox {
     color: orange;
 }
 
+#createArchesProjectScrollArea, 
+#scrollAreaWidgetContents {
+    background-color: #fff;
+}
