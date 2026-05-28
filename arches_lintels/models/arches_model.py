@@ -1,5 +1,7 @@
 import os
 import json
+from uuid import uuid4
+import datetime
 
 from arches_lintels.settings import SYS_SETTINGS_PATH
 from arches_lintels.models.settings_model import SettingsModel
@@ -7,6 +9,58 @@ from arches_lintels.models.settings_model import SettingsModel
 class ArchesModel:
     def __init__(self):
         self.settings = SettingsModel()
+        self.lintels_path = self.settings.get_config_value("install_directory")
+        self.projects_root = os.path.join(self.lintels_path, "projects")
+        self.python_path = self.settings.get_config_value(["dependencies", "python", "install_directory"])
 
     def get_projects(self):
         return self.settings.get_config_value("projects")
+    
+    def get_python_exe(self):
+        return os.path.join(self.python_path, "python.exe")
+
+    def _create_projects_root(self):
+        os.makedirs(self.projects_root)
+
+    def create_project_dir(self, project_name):
+        if not os.path.exists(self.projects_root):
+            self._create_projects_root()
+        if not os.path.exists(os.path.join(self.projects_root, project_name)):
+            os.makedirs(os.path.join(self.projects_root, project_name))
+            return os.path.join(self.projects_root, project_name)
+        else:
+            print("Project name already exists: raise error here")
+            return None
+
+    def create_project_venv_dir(self, project_dir):
+        os.makedirs(os.path.join(project_dir, "venv"))
+        return os.path.join(project_dir, "venv")
+
+    def new_project_entry(self, project_name, arches_version):
+        project_dir = self.create_project_dir(project_name)
+        venv_dir = self.create_project_venv_dir(project_dir)
+        
+        new_project = {
+            "id": str(uuid4()),
+            "name": project_name,
+            "arches_version": arches_version,
+            "project_dir": project_dir,
+            "venv_dir": venv_dir,
+            "created_at": str(datetime.datetime.now())
+        }
+
+        existing_projects = self.settings.get_config_value("projects")
+        existing_projects.append(new_project)
+        self.settings.update_value("projects", existing_projects)
+
+        return new_project
+    
+    def create_virtual_environment(self, venv_dir):
+        python_exe = self.get_python_exe()
+        args = ["-m", "venv", venv_dir]
+        return python_exe, args
+    
+    def install_arches(self):
+        venv_python = os.path.join(self.current_project["venv_dir"], "Scripts", "python.exe")
+        version = self.current_project["arches_version"]        
+        

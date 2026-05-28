@@ -46,12 +46,12 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Name</string>
+            <string>Name (*)</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit"/>
+          <widget class="QLineEdit" name="archesProjectName"/>
          </item>
         </layout>
        </item>
@@ -60,7 +60,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Version</string>
+            <string>Version (*)</string>
            </property>
           </widget>
          </item>
@@ -126,6 +126,20 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="createProjectButton">
+         <property name="text">
+          <string>Create</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="errorMessageLabel">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

@@ -18,12 +18,24 @@ class CreateArchesProjectDialog(QDialog):
         self.ui = Ui_CreateArchesProject()
         self.ui.setupUi(self)
         self.init_ui()
-        print("INIT")
+        self.ui.createProjectButton.clicked.connect(self.create_project)
+        
 
     def init_ui(self):
         self.ui.archesVersions.clear()
         self.ui.archesVersions.addItems(ARCHES_VERSIONS)
         self.ui.archesApps.clear()
-        self.ui.archesApps.addItems(ARCHES_APPS)
+        # self.ui.archesApps.addItems(ARCHES_APPS) # not yet implemented 
 
-    
+    def create_project(self):
+        if not self.ui.archesProjectName.text():
+            self.ui.errorMessageLabel.setText("Required fields not populated.")
+            return
+        
+        self.data = {
+            "project_name": self.ui.archesProjectName.text(),
+            "arches_version": self.ui.archesVersions.currentText()
+        }
+
+        # close dialog with 'Accepted' status
+        self.accept()

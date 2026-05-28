@@ -1,5 +1,8 @@
 import sys
 
+from PyQt6.QtWidgets import QDialog
+from PyQt6.QtCore import QProcess
+
 from functools import partial
 
 from arches_lintels.models.arches_model import ArchesModel
@@ -32,4 +35,23 @@ class ArchesManagerController:
     def create_project(self):
         print("CLICKED")
         self.create_project_dialog = CreateArchesProjectDialog()
-        self.create_project_dialog.exec()
+        create_proj_result = self.create_project_dialog.exec()
+
+        if create_proj_result == QDialog.DialogCode.Accepted:
+            data = self.create_project_dialog.data
+
+            print(data)
+
+            project_dict = self.arches_model.new_project_entry(data["project_name"], data["arches_version"])
+            python_exe, args = self.arches_model.create_virtual_environment(project_dict["venv_dir"])
+
+            self.init_venv_process = QProcess()
+            self.init_venv_process.finished.connect(self.install_arches)
+            self.init_venv_process.start(python_exe, args)
+
+    
+    def install_arches(self, exit_code, exit_status):
+        if exit_code != 0:
+            print("Failed to create vrtual environment")
+            return
+        

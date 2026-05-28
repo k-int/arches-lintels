@@ -17,6 +17,7 @@ PG_PORT = "45432"
 ES_PORT = 49200
 
 ARCHES_VERSIONS = [
+    "7.5",
     "7.6",
     "8.0",
     "8.1",
