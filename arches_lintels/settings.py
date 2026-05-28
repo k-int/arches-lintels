@@ -31,3 +31,8 @@ ARCHES_APPS = [
     "arches_component_lab",
     "arches_querysets"
 ]
+
+# Available ontologies to add to projects
+ONTOLOGIES = [
+    "CIDOC CRM",
+]

@@ -4,7 +4,7 @@ from PyQt6.QtGui import QIcon, QFontDatabase
 from PyQt6.QtCore import QDir, QSize
 from PyQt6.QtWidgets import QDialog
 
-from arches_lintels.settings import ARCHES_VERSIONS, ARCHES_APPS
+from arches_lintels.settings import ARCHES_VERSIONS, ARCHES_APPS, ONTOLOGIES
 from arches_lintels.views.ui_create_arches_project import Ui_CreateArchesProject
 
 
@@ -19,13 +19,24 @@ class CreateArchesProjectDialog(QDialog):
         self.ui.setupUi(self)
         self.init_ui()
         self.ui.createProjectButton.clicked.connect(self.create_project)
-        
+        self.ui.advancedButton.clicked.connect(self.open_advanced)
+        self.ui.advancedOptions.setVisible(False)
 
     def init_ui(self):
         self.ui.archesVersions.clear()
         self.ui.archesVersions.addItems(ARCHES_VERSIONS)
         self.ui.archesApps.clear()
         # self.ui.archesApps.addItems(ARCHES_APPS) # not yet implemented 
+        self.ui.ontologyCombo.clear()
+        self.ui.ontologyCombo.addItem("None")
+        self.ui.ontologyCombo.addItems(ONTOLOGIES)
+        self.ui.ontologyCombo.setCurrentIndex(1) # set default to CIDOC
+
+    def open_advanced(self):
+        if self.ui.advancedButton.isChecked():
+            self.ui.advancedOptions.setVisible(True)
+        else:
+            self.ui.advancedOptions.setVisible(False)
 
     def create_project(self):
         if not self.ui.archesProjectName.text():
