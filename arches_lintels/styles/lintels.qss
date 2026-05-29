@@ -29,6 +29,41 @@ QComboBox {
     text-align: center;
 }
 
+QRadioButton {
+    color: #788596;
+}
+
+QCheckBox::indicator,
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid #788596;
+    color: #fff;
+}
+
+QPushButton:hover,
+QComboBox:hover,
+QCheckBox::indicator:hover,
+QRadioButton::indicator:hover {
+    background-color: #e7e7e7;
+    border: 1px solid #788596;
+}
+
+QPushButton:pressed,
+QComboBox:pressed,
+QCheckBox::indicator:pressed,
+QRadioButton::indicator:pressed {
+    background-color: #c7c7c7;
+    border: 1px solid #788596;
+}
+
+QCheckBox::indicator:checked,
+QRadioButton::indicator:checked {
+    background-color: #8b8b8b;
+    border: 1px solid #5d6774;
+}
+
 #MainWindow {
     background-color: #fff;
 }

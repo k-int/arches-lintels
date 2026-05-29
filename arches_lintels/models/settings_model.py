@@ -38,7 +38,8 @@ class SettingsModel:
                 },
             },
             "projects": [],
-            "theme": "" #todo get from system default
+            "theme": "", #todo get from system default
+            "debug": False
         }
 
     def create_or_get_settings(self):

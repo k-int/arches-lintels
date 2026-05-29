@@ -20,6 +20,12 @@ class SettingsPage:
         self.ui.filePathPostgres.setText(self.settings.get_config_value(["dependencies","postgres","install_directory"]))
         self.ui.filePathElastic.setText(self.settings.get_config_value(["dependencies","elasticsearch","install_directory"]))
         self.ui.filePathNodejs.setText(self.settings.get_config_value(["dependencies","nodejs","install_directory"]))
+        
+        self.ui.debugRadioButton.setChecked(self.settings.get_config_value(["debug"]))
+        if self.settings.get_config_value(["debug"]):
+            self.ui.debugRadioButton.setText("On")
+        else:
+            self.ui.debugRadioButton.setText("Off")
 
         self.ui.fileBrowseLintels.clicked.connect(
             partial(self.select_folder,
@@ -56,10 +62,17 @@ class SettingsPage:
                     self.ui.filePathGdal,
                     ["dependencies","gdal","install_directory"])
         )
-
+        self.ui.debugRadioButton.clicked.connect(self.set_debug)
 
     def select_folder(self, line_edit, keys):
         folder_path = file_browser(dir_only=True)
         line_edit.setText(folder_path)
         self.settings.update_value(keys, folder_path)
 
+    def set_debug(self):
+        if self.ui.debugRadioButton.isChecked():
+            self.ui.debugRadioButton.setText("On")
+            self.settings.update_value(["debug"], True)
+        else:
+            self.ui.debugRadioButton.setText("Off")
+            self.settings.update_value(["debug"], False)
