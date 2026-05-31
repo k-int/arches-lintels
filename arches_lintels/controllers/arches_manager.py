@@ -1,4 +1,5 @@
 import sys
+import logging
 
 from PyQt6.QtWidgets import QDialog
 from PyQt6.QtCore import QProcess
@@ -7,7 +8,9 @@ from functools import partial
 
 from arches_lintels.models.arches_model import ArchesModel
 from arches_lintels.controllers.components.create_arches_project import CreateArchesProjectDialog
+from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
 
+logger = logging.getLogger(__name__)
 
 class ArchesManagerController:
     """
@@ -46,6 +49,8 @@ class ArchesManagerController:
             python_exe, args = self.arches_model.create_virtual_environment(project_dict["venv_dir"])
 
             self.init_venv_process = QProcess()
+
+            qprocess_debugging(self.init_venv_process)
             self.init_venv_process.finished.connect(self.install_arches)
             self.init_venv_process.start(python_exe, args)
 

@@ -1,9 +1,12 @@
+import logging
+
 from PyQt6.QtCore import QProcess, QTimer
 
 from arches_lintels.models.dependencies.elasticsearch import ElasticsearchModel
-from arches_lintels.controllers.utils.process_debugging import read_stderr, read_stdout, handle_process_error
+from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
 from arches_lintels.controllers.dependencies.dep_ui_updates import DependencyUIUpdates
 
+logger = logging.getLogger(__name__)
 
 class ElasticsearchController():
     """
@@ -38,10 +41,7 @@ class ElasticsearchController():
         self.es_process.setWorkingDirectory(es_path)
         self.es_process.stateChanged.connect(self.es_state_change)
         
-        # self.es_process.readyReadStandardError.connect(lambda: read_stderr(self.es_process))
-        # self.es_process.readyReadStandardOutput.connect(lambda: read_stdout(self.es_process))
-        # self.es_process.errorOccurred.connect(handle_process_error)
-
+        qprocess_debugging(self.es_process)
         self.es_process.start(primary_cmd, args)
 
     def stop_elasticsearch(self):
@@ -51,6 +51,7 @@ class ElasticsearchController():
             pid = self.es_process.processId()
             command, args = self.elasticsearch_model.stop_elasticsearch(pid)
             self.stop_es_process = QProcess()
+            qprocess_debugging(self.stop_es_process)
             self.stop_es_process.start(command, args)
             self.stop_es_process.waitForFinished(3000)
             # Now we can kill both processes

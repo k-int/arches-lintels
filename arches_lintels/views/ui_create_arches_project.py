@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_CreateArchesProject(object):
     def setupUi(self, CreateArchesProject):
         CreateArchesProject.setObjectName("CreateArchesProject")
-        CreateArchesProject.resize(300, 500)
+        CreateArchesProject.resize(450, 500)
         self.verticalLayout = QtWidgets.QVBoxLayout(CreateArchesProject)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -20,7 +20,7 @@ class Ui_CreateArchesProject(object):
         self.createArchesProjectScrollArea.setWidgetResizable(True)
         self.createArchesProjectScrollArea.setObjectName("createArchesProjectScrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 298, 498))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 448, 498))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName("verticalLayout_2")

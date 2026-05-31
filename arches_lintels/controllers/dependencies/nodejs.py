@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QProcess
 
 from arches_lintels.models.dependencies.nodejs import NodeModel
-from arches_lintels.controllers.utils.process_debugging import read_stderr, read_stdout, handle_process_error
+from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
 from arches_lintels.controllers.dependencies.dep_ui_updates import DependencyUIUpdates
 
 class nodeController():

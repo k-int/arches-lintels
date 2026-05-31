@@ -1,8 +1,12 @@
+import logging
+
 from PyQt6.QtCore import QProcess
 
 from arches_lintels.models.dependencies.postgres import PostgresModel
-from arches_lintels.controllers.utils.process_debugging import read_stderr, read_stdout, handle_process_error
+from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
 from arches_lintels.controllers.dependencies.dep_ui_updates import DependencyUIUpdates
+
+logger = logging.getLogger(__name__)
 
 class PostgresController():
     """
@@ -36,6 +40,7 @@ class PostgresController():
         initdb_exe, args = self.postgres_model.initialise_postgres()
 
         self.init_process = QProcess()
+        qprocess_debugging(self.init_postgis_process)
         self.init_process.start(initdb_exe, args)
         self.init_process.finished.connect(
             self.on_init_postgres_finished
@@ -58,6 +63,7 @@ class PostgresController():
                 print(f"failed with exit code: {exit_code}: {exit_status}")
                 return
             self.init_postgis_process = QProcess()
+            qprocess_debugging(self.init_postgis_process)
             self.init_postgis_process.start(psql_exe, postgis_args)
             self.init_postgis_process.finished.connect(self.on_init_postgis_finished)
 
@@ -66,12 +72,14 @@ class PostgresController():
                 print(f"failed with exit code: {exit_code}: {exit_status}")
                 return            
             self.init_postgis_process = QProcess()
+            qprocess_debugging(self.init_postgis_process)
             self.init_postgis_process.start(psql_exe, template_set_args)
             self.init_postgis_process.finished.connect(_additional_commands)
 
         created_exe, psql_exe, create_args, template_set_args, postgis_args = self.postgres_model.load_postgis_extension()
 
         self.init_postgis_process = QProcess()
+        qprocess_debugging(self.init_postgis_process)
         self.init_postgis_process.start(created_exe, create_args)
         self.init_postgis_process.finished.connect(_template_set)
 
@@ -89,9 +97,7 @@ class PostgresController():
         self.pg_process.stateChanged.connect(self.pg_state_change)
         self.pg_process.finished.connect(self.stop_postgres)
 
-        # self.pg_process.readyReadStandardError.connect(self.read_postgres_stderr)
-        # self.pg_process.readyReadStandardOutput.connect(self.read_postgres_stdout)
-        # self.pg_process.errorOccurred.connect(self.handle_process_error)
+        qprocess_debugging(self.pg_process)
         self.pg_process.start(postgres_exe, args)
 
     def stop_postgres(self):
