@@ -7,6 +7,7 @@ from PyQt6.QtGui import QFontDatabase
 
 from scripts.build_ui import build_ui
 from arches_lintels.settings import APP_ROOT
+from arches_lintels.logging import configure_logging
 
 
 def main():
@@ -15,6 +16,8 @@ def main():
 
     # import main window after rebuilding ui
     from arches_lintels.controllers.mainwindow import MainWindow
+
+    configure_logging()
 
     app = QApplication(sys.argv)
 
