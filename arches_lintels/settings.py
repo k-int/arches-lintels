@@ -33,6 +33,9 @@ ARCHES_APPS = [
 ]
 
 # Available ontologies to add to projects
-ONTOLOGIES = [
-    "CIDOC CRM",
-]
+ONTOLOGIES_PATH = os.path.join(APP_ROOT, "arches", "ontologies")
+
+ONTOLOGIES = {
+    "CIDOC CRM": os.path.join(ONTOLOGIES_PATH, "cidoc_crm"),
+    "LinkedArt": os.path.join(ONTOLOGIES_PATH, "linkedart")
+}
