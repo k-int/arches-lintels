@@ -8,6 +8,7 @@ from functools import partial
 
 from arches_lintels.models.arches_model import ArchesModel
 from arches_lintels.controllers.components.create_arches_project import CreateArchesProjectDialog
+from arches_lintels.controllers.components.active_project_widget import ActiveProjectWidget
 from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
 
 logger = logging.getLogger(__name__)
@@ -28,12 +29,16 @@ class ArchesManagerController:
         self.ui.createArchesProjectButton.clicked.connect(self.create_project)
         
     def init_projects_ui(self):
-        if len(self.arches_model.get_projects()) > 0:
+        projects = self.arches_model.get_projects()
+        if len(projects) > 0:
             self.ui.noActiveProjectsLayout.hide()
-            self.ui.projectsLayout.show()
+
+            for project in projects:
+                widget = ActiveProjectWidget()
+                self.ui.projectLayout.addWidget(widget)
         else:
             self.ui.noActiveProjectsLayout.show()
-            self.ui.projectsLayout.hide()
+            # self.ui.projectsLayout.hide()
 
     def create_project(self):
         print("CLICKED")
@@ -58,5 +63,6 @@ class ArchesManagerController:
     def install_arches(self, exit_code, exit_status):
         if exit_code != 0:
             print("Failed to create vrtual environment")
+            #todo remove from projects list? - don't want uncomplete projects clogging up list 
             return
         
