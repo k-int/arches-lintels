@@ -79,3 +79,9 @@ class ArchesModel:
         venv_python_exe = os.path.join(venv_dir, "Scripts", "python.exe")
         args = ["-m", "pip", "install", f"arches~={arches_version}"]
         return venv_python_exe, args
+    
+    def create_new_project(self, venv_dir, project_name):
+        # the use of archesadmin means we only support 7.6 onwards
+        arches_admin_exe = os.path.join(venv_dir, "Scripts", "arches-admin.exe")
+        args = ["startproject", project_name]
+        return arches_admin_exe, args

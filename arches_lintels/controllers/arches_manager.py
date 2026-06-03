@@ -28,7 +28,7 @@ class ArchesManagerController:
 
         self.ui.createArchesProjectButton.disconnect()
         self.ui.createArchesProjectButton.clicked.connect(self.create_project)
-        
+
     def init_projects_ui(self):
         projects = self.arches_model.get_projects()
         if len(projects) > 0:
@@ -60,27 +60,36 @@ class ArchesManagerController:
             )
             self.init_venv_process.start(python_exe, args)
 
-    
     def install_arches(self, exit_code, exit_status, project_dict):
         if exit_code != 0:
             print("Failed to create vrtual environment", exit_code, exit_status)
-            #todo remove from projects list? - don't want uncomplete projects clogging up list 
+            # todo remove from projects list? - don't want uncomplete projects clogging up list
             return
-        
+
         venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
                                          arches_version=project_dict["arches_version"])
 
         self.arches_install_process = QProcess()
         qprocess_debugging(self.arches_install_process)
-        self.arches_install_process.finished.connect(partial(self.on_install_arches_finished, project_dict=project_dict))
+        self.arches_install_process.finished.connect(partial(self.create_arches_project, project_dict=project_dict))
         self.arches_install_process.start(venv_python_exe, args)
 
-    def on_install_arches_finished(self, exit_code, exit_status, project_dict):
+    # def on_install_arches_finished(self, exit_code, exit_status, project_dict):
+    #     if exit_code !=0:
+    #         print("Failed to install Arches", exit_code, exit_status)
+    #         return
+
+    #     project_dict
+
+    def create_arches_project(self, exit_code, exit_status, project_dict):
         if exit_code !=0:
             print("Failed to install Arches", exit_code, exit_status)
             return
-    
-    #     project_dict
-        
 
-    # def create_arches_project(self, exit_code, exit_status, project_dict):
+        arches_admin_exe, args = self.arches_model.create_new_project(
+            venv_dir=project_dict["venv_dir"], project_name=project_dict["name"]
+        )
+
+        self.create_project_process = QProcess()
+        qprocess_debugging(self.create_project_process)
+        self.create_project_process.start(arches_admin_exe, args)
