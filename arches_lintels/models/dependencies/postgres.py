@@ -8,15 +8,21 @@ from arches_lintels.models.settings_model import SettingsModel
 class PostgresModel:
     def __init__(self, settings_model):
         self.settings_model = settings_model
-        self.postgres_path = self.settings_model.get_config_value(["dependencies","postgres","install_directory"])
-        self.postgis_path = self.settings_model.get_config_value(["dependencies","postgis","install_directory"])
+
+    @property
+    def get_postgres_path(self):
+        return self.settings_model.get_config_value(["dependencies","postgres","install_directory"])
+
+    @property
+    def get_postgis_path(self):
+        return self.settings_model.get_config_value(["dependencies","postgis","install_directory"])
 
     def get_pg_bin_path(self):
         # todo need some os.path.exists() alerts here
-        return os.path.join(self.postgres_path, "pgsql", "bin")
+        return os.path.join(self.get_postgres_path, "pgsql", "bin")
 
     def get_pg_data_path(self):
-        return os.path.join(self.postgres_path, "pgsql", "data")
+        return os.path.join(self.get_postgres_path, "pgsql", "data")
 
     def get_pg_createdb_path(self):
         return os.path.join(self.get_pg_bin_path(), "createdb.exe")
@@ -125,7 +131,7 @@ class PostgresModel:
         """
         Checks if the PostGIS extension is bundled in the current PSQL installation.
         """
-        exists = os.path.exists(os.path.join(self.postgres_path, "pgsql", "lib", "postgis-3.dll"))
+        exists = os.path.exists(os.path.join(self.get_postgres_path, "pgsql", "lib", "postgis-3.dll"))
         self.settings_model.update_value(["dependencies","postgis","bundled"], exists)
         return exists
 

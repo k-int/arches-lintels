@@ -9,17 +9,20 @@ from arches_lintels.models.settings_model import SettingsModel
 class ElasticsearchModel():
     def __init__(self, settings_model):
         self.settings_model = settings_model
-        self.elasticsearch_path = self.settings_model.get_config_value(["dependencies","elasticsearch","install_directory"])
         self.max_retries = 15
 
+    @property
+    def get_elasticsearch_path(self):
+        return self.settings_model.get_config_value(["dependencies","elasticsearch","install_directory"])
+
     def get_es_bat_path(self):
-        bat_path = os.path.join(self.elasticsearch_path, "bin", "elasticsearch.bat")
+        bat_path = os.path.join(self.get_elasticsearch_path, "bin", "elasticsearch.bat")
         if os.path.exists(bat_path):
             self.settings_model.update_value(["dependencies","elasticsearch","installed"], True)
         else:
             self.settings_model.update_value(["dependencies","elasticsearch","installed"], False)
 
-        return os.path.join(self.elasticsearch_path, "bin", "elasticsearch.bat")
+        return os.path.join(self.get_elasticsearch_path, "bin", "elasticsearch.bat")
 
     def start_elasticsearch(self):
         print("STARTING ELASTICSEARCH")
@@ -36,7 +39,7 @@ class ElasticsearchModel():
             # "-Ediscovery.type=single-node",
         ]
 
-        return primary_cmd, args, self.elasticsearch_path
+        return primary_cmd, args, self.get_elasticsearch_path
 
     def stop_elasticsearch(self, pid):
         command = "taskkill"

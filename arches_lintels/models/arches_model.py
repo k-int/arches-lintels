@@ -9,15 +9,21 @@ from arches_lintels.models.settings_model import SettingsModel
 class ArchesModel:
     def __init__(self, settings_model):
         self.settings_model = settings_model
-        self.lintels_path = self.settings_model.get_config_value("install_directory")
-        self.projects_root = os.path.join(self.lintels_path, "projects")
-        self.python_path = self.settings_model.get_config_value(["dependencies", "python", "install_directory"])
+        self.projects_root = os.path.join(self.get_lintels_path, "projects")
+
+    @property
+    def get_lintels_path(self):
+        return self.settings_model.get_config_value("install_directory")
+
+    @property
+    def get_python_path(self):
+        return self.settings_model.get_config_value(["dependencies", "python", "install_directory"])
 
     def get_projects(self):
         return self.settings_model.get_config_value("projects")
     
     def get_python_exe(self):
-        return os.path.join(self.python_path, "python.exe")
+        return os.path.join(self.get_python_path, "python.exe")
 
     def _create_projects_root(self):
         os.makedirs(self.projects_root)
