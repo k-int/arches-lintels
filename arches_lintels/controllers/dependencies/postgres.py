@@ -93,11 +93,9 @@ class PostgresController():
         postgres_exe, args = self.postgres_model.start_postgres()
 
         self.pg_process = QProcess()
-
+        qprocess_debugging(self.pg_process)
         self.pg_process.stateChanged.connect(self.pg_state_change)
         self.pg_process.finished.connect(self.stop_postgres)
-
-        qprocess_debugging(self.pg_process)
         self.pg_process.start(postgres_exe, args)
 
     def stop_postgres(self):
