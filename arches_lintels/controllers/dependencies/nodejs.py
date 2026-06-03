@@ -1,23 +1,14 @@
-from PyQt6.QtCore import QProcess
+from PyQt6.QtCore import QProcessEnvironment
 
-from arches_lintels.models.dependencies.nodejs import NodeModel
-from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
-from arches_lintels.controllers.dependencies.dep_ui_updates import DependencyUIUpdates
 
-class nodeController():
+
+def node_environment(node_model):
     """
-    Controller for the node processes.
+    This function calls the Node Model and inserts the Lintels node
+    installation into PATH.
     """
 
-    def __init__(self, ui):
-        super().__init__()
-        self.ui = ui
-        self.dep_ui_updates = DependencyUIUpdates(
-            install_label=self.ui.nodeInstalledLabel, 
-            install_button = self.ui.nodeInstallButton, 
-            start_button = self.ui.nodeRunButton, 
-            stop_button = self.ui.nodeStopButton,
-            running_label = self.ui.nodeRunningLabel
-        )
+    qprocessenv = QProcessEnvironment.systemEnvironment()
+    qprocessenv = node_model.build_node_environment(qprocessenv)
 
-        self.node_model = NodeModel()
+    return qprocessenv

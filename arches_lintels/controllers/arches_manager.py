@@ -7,6 +7,9 @@ from PyQt6.QtCore import QProcess
 from functools import partial
 
 from arches_lintels.models.arches_model import ArchesModel
+from arches_lintels.models.dependencies.nodejs import NodeModel
+
+from arches_lintels.controllers.dependencies.nodejs import node_environment
 from arches_lintels.controllers.components.create_arches_project import CreateArchesProjectDialog
 from arches_lintels.controllers.components.active_project_widget import ActiveProjectWidget
 from arches_lintels.controllers.utils.qprocess_debugging import qprocess_debugging
@@ -23,6 +26,7 @@ class ArchesManagerController:
         self.ui = ui
         self.settings_model = settings_model
         self.arches_model = ArchesModel(settings_model)
+        self.node_model = NodeModel(settings_model)
 
         self.init_projects_ui()
 
@@ -95,4 +99,7 @@ class ArchesManagerController:
 
         self.create_project_process = QProcess()
         qprocess_debugging(self.create_project_process)
+
+        qprocessenv = node_environment(self.node_model)
+        self.create_project_process.setProcessEnvironment(qprocessenv)
         self.create_project_process.start(arches_admin_exe, args)
