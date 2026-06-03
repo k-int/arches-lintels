@@ -34,7 +34,7 @@ class ArchesModel:
         """
         return os.path.exists(os.path.join(project_dir, "venv", "Scripts", "activate"))
 
-    def create_project_dir(self, project_name):
+    def create_lintel_project_dir(self, project_name):
         if not os.path.exists(self.projects_root):
             self._create_projects_root()
         if not os.path.exists(os.path.join(self.projects_root, project_name)):
@@ -43,21 +43,27 @@ class ArchesModel:
         else:
             print("Project name already exists: raise error here")
             return None
+    
+    def create_arches_project_dir(self, lintel_project_dir, project_name):
+        os.makedirs(os.path.join(lintel_project_dir, project_name))
+        return os.path.join(lintel_project_dir, project_name)
 
     def create_project_venv_dir(self, project_dir):
         os.makedirs(os.path.join(project_dir, "venv"))
         return os.path.join(project_dir, "venv")
 
     def new_project_entry(self, project_name, arches_version):
-        project_dir = self.create_project_dir(project_name)
-        venv_dir = self.create_project_venv_dir(project_dir)
+        lintel_project_dir = self.create_lintel_project_dir(project_name)
+        venv_dir = self.create_project_venv_dir(lintel_project_dir)
+        arches_project_dir = self.create_arches_project_dir(lintel_project_dir, project_name)
         
         new_project = {
             "id": str(uuid4()),
             "name": project_name,
             "arches_version": arches_version,
             "arches_installed": False,
-            "project_dir": project_dir,
+            "lintel_project_dir": lintel_project_dir,
+            "arches_project_dir": arches_project_dir,
             "project_created": False,
             "venv_dir": venv_dir,
             "venv_created": False,
@@ -80,8 +86,8 @@ class ArchesModel:
         args = ["-m", "pip", "install", f"arches~={arches_version}"]
         return venv_python_exe, args
     
-    def create_new_project(self, venv_dir, project_name):
+    def create_new_project(self, venv_dir, project_name, arches_project_dir):
         # the use of archesadmin means we only support 7.6 onwards
         arches_admin_exe = os.path.join(venv_dir, "Scripts", "arches-admin.exe")
-        args = ["startproject", project_name]
+        args = ["startproject", project_name, "--directory", arches_project_dir]
         return arches_admin_exe, args

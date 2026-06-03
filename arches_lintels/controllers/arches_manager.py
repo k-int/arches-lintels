@@ -86,8 +86,11 @@ class ArchesManagerController:
             print("Failed to install Arches", exit_code, exit_status)
             return
 
+        print("project_dict", project_dict)
         arches_admin_exe, args = self.arches_model.create_new_project(
-            venv_dir=project_dict["venv_dir"], project_name=project_dict["name"]
+            venv_dir=project_dict["venv_dir"], 
+            project_name=project_dict["name"],
+            arches_project_dir=project_dict["arches_project_dir"]
         )
 
         self.create_project_process = QProcess()
