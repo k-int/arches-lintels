@@ -60,7 +60,7 @@ class ArchesModel:
         args = ["-m", "venv", venv_dir]
         return python_exe, args
     
-    def install_arches(self):
-        venv_python = os.path.join(self.current_project["venv_dir"], "Scripts", "python.exe")
-        version = self.current_project["arches_version"]        
-        
+    def install_arches(self, venv_dir, arches_version):
+        venv_python_exe = os.path.join(venv_dir, "Scripts", "python.exe")
+        args = ["-m", "pip", "install", f"arches~={arches_version}"]
+        return venv_python_exe, args

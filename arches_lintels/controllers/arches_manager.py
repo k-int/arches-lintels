@@ -56,13 +56,24 @@ class ArchesManagerController:
             self.init_venv_process = QProcess()
 
             qprocess_debugging(self.init_venv_process)
-            self.init_venv_process.finished.connect(self.install_arches)
+            self.init_venv_process.finished.connect(
+               partial(self.install_arches, project_dict=project_dict)
+            )
             self.init_venv_process.start(python_exe, args)
 
     
-    def install_arches(self, exit_code, exit_status):
+    def install_arches(self, exit_code, exit_status, project_dict):
         if exit_code != 0:
-            print("Failed to create vrtual environment")
+            print("Failed to create vrtual environment", exit_code, exit_status)
             #todo remove from projects list? - don't want uncomplete projects clogging up list 
             return
         
+        venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
+                                         arches_version=project_dict["arches_version"])
+
+        self.arches_install_process = QProcess()
+        qprocess_debugging(self.arches_install_process)
+        # self.arches_install_process.finished.connect(partial(self.create_arches_project, project_dict=project_dict))
+        self.arches_install_process.start(venv_python_exe, args)
+
+    # def create_arches_project(self, exit_code, exit_status, project_dict):
