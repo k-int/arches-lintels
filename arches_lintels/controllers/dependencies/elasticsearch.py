@@ -13,9 +13,10 @@ class ElasticsearchController():
     Controller for the elasticsearch processes.
     """
 
-    def __init__(self, ui):
+    def __init__(self, ui, settings_model):
         super().__init__()
         self.ui = ui
+
         self.dep_ui_updates = DependencyUIUpdates(
             install_label=self.ui.elasticInstalledLabel, 
             install_button = self.ui.elasticInstallButton, 
@@ -24,7 +25,7 @@ class ElasticsearchController():
             running_label = self.ui.elasticRunningLabel
         )
 
-        self.elasticsearch_model = ElasticsearchModel()
+        self.elasticsearch_model = ElasticsearchModel(settings_model)
 
         self.es_timer = QTimer()
         self.es_timer.timeout.connect(self.elasticsearch_health)

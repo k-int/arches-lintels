@@ -7,20 +7,26 @@ from arches_lintels.settings import SYS_SETTINGS_PATH
 from arches_lintels.models.settings_model import SettingsModel
 
 class ArchesModel:
-    def __init__(self):
-        self.settings = SettingsModel()
-        self.lintels_path = self.settings.get_config_value("install_directory")
+    def __init__(self, settings_model):
+        self.settings_model = settings_model
+        self.lintels_path = self.settings_model.get_config_value("install_directory")
         self.projects_root = os.path.join(self.lintels_path, "projects")
-        self.python_path = self.settings.get_config_value(["dependencies", "python", "install_directory"])
+        self.python_path = self.settings_model.get_config_value(["dependencies", "python", "install_directory"])
 
     def get_projects(self):
-        return self.settings.get_config_value("projects")
+        return self.settings_model.get_config_value("projects")
     
     def get_python_exe(self):
         return os.path.join(self.python_path, "python.exe")
 
     def _create_projects_root(self):
         os.makedirs(self.projects_root)
+
+    def _is_venv_created(self, project_dir):
+        """
+        Look for the file venv/Scripts/activate, venv could have been created but not completed
+        """
+        return os.path.exists(os.path.join(project_dir, "venv", "Scripts", "activate"))
 
     def create_project_dir(self, project_name):
         if not os.path.exists(self.projects_root):
@@ -44,14 +50,17 @@ class ArchesModel:
             "id": str(uuid4()),
             "name": project_name,
             "arches_version": arches_version,
+            "arches_installed": False,
             "project_dir": project_dir,
+            "project_created": False,
             "venv_dir": venv_dir,
+            "venv_created": False,
             "created_at": str(datetime.datetime.now())
         }
 
-        existing_projects = self.settings.get_config_value("projects")
+        existing_projects = self.settings_model.get_config_value("projects")
         existing_projects.append(new_project)
-        self.settings.update_value("projects", existing_projects)
+        self.settings_model.update_value("projects", existing_projects)
 
         return new_project
     

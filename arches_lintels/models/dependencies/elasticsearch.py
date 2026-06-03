@@ -7,8 +7,8 @@ from arches_lintels.models.settings_model import SettingsModel
 
 
 class ElasticsearchModel():
-    def __init__(self):
-        self.settings_model = SettingsModel()
+    def __init__(self, settings_model):
+        self.settings_model = settings_model
         self.elasticsearch_path = self.settings_model.get_config_value(["dependencies","elasticsearch","install_directory"])
         self.max_retries = 15
 

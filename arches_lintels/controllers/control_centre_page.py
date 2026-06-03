@@ -9,13 +9,13 @@ class ControlCentreController():
     to each of the dependency controllers to handle and spin up processes.
     """
 
-    def __init__(self, ui):
+    def __init__(self, ui, settings_model):
         super().__init__()
         self.ui = ui
 
         # dependencies
-        self.postgres_controller = PostgresController(ui)
-        self.elasticsearch_controller = ElasticsearchController(ui)
+        self.postgres_controller = PostgresController(ui, settings_model)
+        self.elasticsearch_controller = ElasticsearchController(ui, settings_model)
 
         self.ui.postgresInstallButton.clicked.connect(self.postgres_controller.initialise_postgres)
         self.ui.postgresRunButton.clicked.connect(self.postgres_controller.start_postgres)

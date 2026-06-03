@@ -9,17 +9,16 @@ class SettingsPage:
     Controller for the stackedwidget settings page
     """
 
-    def __init__(self, ui):
+    def __init__(self, ui, settings_model):
         super().__init__()
         self.ui = ui
+        self.settings_model = settings_model
 
-        self.settings = SettingsModel(initialise_config=True)
-
-        self.ui.filePathLintels.setText(self.settings.get_config_value(["install_directory"]))
-        self.ui.filePathPython.setText(self.settings.get_config_value(["dependencies","python","install_directory"]))
-        self.ui.filePathPostgres.setText(self.settings.get_config_value(["dependencies","postgres","install_directory"]))
-        self.ui.filePathElastic.setText(self.settings.get_config_value(["dependencies","elasticsearch","install_directory"]))
-        self.ui.filePathNodejs.setText(self.settings.get_config_value(["dependencies","nodejs","install_directory"]))
+        self.ui.filePathLintels.setText(self.settings_model.get_config_value(["install_directory"]))
+        self.ui.filePathPython.setText(self.settings_model.get_config_value(["dependencies","python","install_directory"]))
+        self.ui.filePathPostgres.setText(self.settings_model.get_config_value(["dependencies","postgres","install_directory"]))
+        self.ui.filePathElastic.setText(self.settings_model.get_config_value(["dependencies","elasticsearch","install_directory"]))
+        self.ui.filePathNodejs.setText(self.settings_model.get_config_value(["dependencies","nodejs","install_directory"]))
         
         self.ui.fileBrowseLintels.clicked.connect(
             partial(self.select_folder,
@@ -60,4 +59,4 @@ class SettingsPage:
     def select_folder(self, line_edit, keys):
         folder_path = file_browser(dir_only=True)
         line_edit.setText(folder_path)
-        self.settings.update_value(keys, folder_path)
+        self.settings_model.update_value(keys, folder_path)

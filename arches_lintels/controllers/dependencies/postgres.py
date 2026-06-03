@@ -13,9 +13,10 @@ class PostgresController():
     Controller for the postgres processes.
     """
 
-    def __init__(self, ui):
+    def __init__(self, ui, settings_model):
         super().__init__()
         self.ui = ui
+        
         self.dep_ui_updates = DependencyUIUpdates(
             install_label=self.ui.postgresInstalledLabel, 
             install_button = self.ui.postgresInstallButton, 
@@ -24,7 +25,7 @@ class PostgresController():
             running_label = self.ui.postgresRunningLabel
         )
 
-        self.postgres_model = PostgresModel()
+        self.postgres_model = PostgresModel(settings_model)
 
         postgis_installed = self.postgres_model.postgis_bundled_check()
         psql_installed = self.postgres_model.pg_init_check()

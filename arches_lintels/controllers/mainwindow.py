@@ -16,16 +16,16 @@ class MainWindow(QMainWindow):
     Lintels Main Window interface class
     """
 
-    def __init__(self):
+    def __init__(self, settings_model):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init_ui()
 
         # controllers for individual pages
-        self.settings_controller = SettingsPage(self.ui)
-        self.control_centre_controller = ControlCentreController(self.ui)
-        self.arches_manager_controller = ArchesManagerController(self.ui)
+        self.settings_controller = SettingsPage(self.ui, settings_model)
+        self.control_centre_controller = ControlCentreController(self.ui, settings_model)
+        self.arches_manager_controller = ArchesManagerController(self.ui, settings_model)
 
     def init_ui(self):
         QDir.addSearchPath("img", os.path.join(APP_ROOT, "img"))

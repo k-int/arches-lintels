@@ -18,10 +18,11 @@ class ArchesManagerController:
     Controller for the stackedwidget Arches manager page
     """
 
-    def __init__(self, ui):
+    def __init__(self, ui, settings_model):
         super().__init__()
         self.ui = ui
-        self.arches_model = ArchesModel()
+        self.settings_model = settings_model
+        self.arches_model = ArchesModel(settings_model)
 
         self.init_projects_ui()
 
@@ -48,8 +49,6 @@ class ArchesManagerController:
         if create_proj_result == QDialog.DialogCode.Accepted:
             data = self.create_project_dialog.data
 
-            print(data)
-
             project_dict = self.arches_model.new_project_entry(data["project_name"], data["arches_version"])
             python_exe, args = self.arches_model.create_virtual_environment(project_dict["venv_dir"])
 
@@ -73,7 +72,15 @@ class ArchesManagerController:
 
         self.arches_install_process = QProcess()
         qprocess_debugging(self.arches_install_process)
-        # self.arches_install_process.finished.connect(partial(self.create_arches_project, project_dict=project_dict))
+        self.arches_install_process.finished.connect(partial(self.on_install_arches_finished, project_dict=project_dict))
         self.arches_install_process.start(venv_python_exe, args)
+
+    def on_install_arches_finished(self, exit_code, exit_status, project_dict):
+        if exit_code !=0:
+            print("Failed to install Arches", exit_code, exit_status)
+            return
+    
+    #     project_dict
+        
 
     # def create_arches_project(self, exit_code, exit_status, project_dict):

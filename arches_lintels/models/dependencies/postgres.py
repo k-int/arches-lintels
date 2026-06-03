@@ -6,8 +6,8 @@ from arches_lintels.models.settings_model import SettingsModel
 
 
 class PostgresModel:
-    def __init__(self):
-        self.settings_model = SettingsModel()
+    def __init__(self, settings_model):
+        self.settings_model = settings_model
         self.postgres_path = self.settings_model.get_config_value(["dependencies","postgres","install_directory"])
         self.postgis_path = self.settings_model.get_config_value(["dependencies","postgis","install_directory"])
 
