@@ -36,6 +36,10 @@ class SettingsModel:
                     "installed": False,
                     "install_directory": ""
                 },
+                "git": {
+                    "installed": False,
+                    "install_directory": ""
+                },
             },
             "projects": [],
             "theme": "" #todo get from system default

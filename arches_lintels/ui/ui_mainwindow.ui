@@ -98,7 +98,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="homePage">
           <widget class="QLabel" name="label">
@@ -686,6 +686,33 @@
                </item>
                <item>
                 <widget class="QPushButton" name="fileBrowseGdal">
+                 <property name="text">
+                  <string>Browse</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="gitLayout">
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>250</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Git path</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="filePathGit"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="fileBrowseGit">
                  <property name="text">
                   <string>Browse</string>
                  </property>

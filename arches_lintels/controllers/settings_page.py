@@ -19,7 +19,8 @@ class SettingsPage:
         self.ui.filePathPostgres.setText(self.settings_model.get_config_value(["dependencies","postgres","install_directory"]))
         self.ui.filePathElastic.setText(self.settings_model.get_config_value(["dependencies","elasticsearch","install_directory"]))
         self.ui.filePathNodejs.setText(self.settings_model.get_config_value(["dependencies","nodejs","install_directory"]))
-        
+        self.ui.filePathGit.setText(self.settings_model.get_config_value(["dependencies","git","install_directory"]))        
+
         self.ui.fileBrowseLintels.clicked.connect(
             partial(self.select_folder,
                     self.ui.filePathLintels,
@@ -54,6 +55,11 @@ class SettingsPage:
             partial(self.select_folder,
                     self.ui.filePathGdal,
                     ["dependencies","gdal","install_directory"])
+        )
+        self.ui.fileBrowseGit.clicked.connect(
+            partial(self.select_folder,
+                    self.ui.filePathGit,
+                    ["dependencies","git","install_directory"])
         )
 
     def select_folder(self, line_edit, keys):
