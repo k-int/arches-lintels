@@ -13,7 +13,9 @@ class ActiveProjectWidget(QWidget):
 
     """
 
-    def __init__(self):
+    def __init__(self, project_dict, project_key):
         super().__init__()
         self.ui = Ui_ActiveProjectWidget()
         self.ui.setupUi(self)
+
+        self.ui.projectNameLabel.setText(project_key)

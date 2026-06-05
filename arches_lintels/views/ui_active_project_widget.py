@@ -15,9 +15,9 @@ class Ui_ActiveProjectWidget(object):
         ActiveProjectWidget.resize(638, 121)
         self.verticalLayout = QtWidgets.QVBoxLayout(ActiveProjectWidget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.projectNameLabel_2 = QtWidgets.QLabel(parent=ActiveProjectWidget)
-        self.projectNameLabel_2.setObjectName("projectNameLabel_2")
-        self.verticalLayout.addWidget(self.projectNameLabel_2)
+        self.projectNameLabel = QtWidgets.QLabel(parent=ActiveProjectWidget)
+        self.projectNameLabel.setObjectName("projectNameLabel")
+        self.verticalLayout.addWidget(self.projectNameLabel)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setContentsMargins(20, -1, -1, -1)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
@@ -37,6 +37,6 @@ class Ui_ActiveProjectWidget(object):
     def retranslateUi(self, ActiveProjectWidget):
         _translate = QtCore.QCoreApplication.translate
         ActiveProjectWidget.setWindowTitle(_translate("ActiveProjectWidget", "Form"))
-        self.projectNameLabel_2.setText(_translate("ActiveProjectWidget", "<project name>"))
+        self.projectNameLabel.setText(_translate("ActiveProjectWidget", "<project name>"))
         self.projectRunButton_2.setText(_translate("ActiveProjectWidget", "Run"))
         self.projectConfigureButton_2.setText(_translate("ActiveProjectWidget", "Configure"))

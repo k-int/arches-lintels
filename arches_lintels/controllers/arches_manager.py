@@ -38,12 +38,15 @@ class ArchesManagerController:
         if len(projects) > 0:
             self.ui.noActiveProjectsLayout.hide()
 
-            for project in projects:
-                widget = ActiveProjectWidget()
-                self.ui.projectLayout.addWidget(widget)
+            for project_name, project_dict in projects.items():
+                self.add_new_project_to_layout(project_dict=project_dict, project_key=project_name)
         else:
             self.ui.noActiveProjectsLayout.show()
             # self.ui.projectsLayout.hide()
+
+    def add_new_project_to_layout(self, project_dict, project_key):
+        widget = ActiveProjectWidget(project_dict, project_key)
+        self.ui.projectLayout.addWidget(widget)
 
     def create_project(self):
         print("CLICKED")
@@ -69,6 +72,8 @@ class ArchesManagerController:
             print("Failed to create vrtual environment", exit_code, exit_status)
             # todo remove from projects list? - don't want uncomplete projects clogging up list
             return
+
+        self.add_new_project_to_layout(project_dict=project_dict, project_key=project_key)
 
         venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
                                          arches_version=project_dict["arches_version"])
