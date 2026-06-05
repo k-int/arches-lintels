@@ -30,6 +30,13 @@ class Ui_ActiveProjectWidget(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_8.addItem(spacerItem)
         self.verticalLayout.addLayout(self.horizontalLayout_8)
+        self.messageLabel = QtWidgets.QLabel(parent=ActiveProjectWidget)
+        self.messageLabel.setObjectName("messageLabel")
+        self.verticalLayout.addWidget(self.messageLabel)
+        self.progressBar = QtWidgets.QProgressBar(parent=ActiveProjectWidget)
+        self.progressBar.setProperty("value", 24)
+        self.progressBar.setObjectName("progressBar")
+        self.verticalLayout.addWidget(self.progressBar)
 
         self.retranslateUi(ActiveProjectWidget)
         QtCore.QMetaObject.connectSlotsByName(ActiveProjectWidget)
@@ -40,3 +47,4 @@ class Ui_ActiveProjectWidget(object):
         self.projectNameLabel.setText(_translate("ActiveProjectWidget", "<project name>"))
         self.projectRunButton_2.setText(_translate("ActiveProjectWidget", "Run"))
         self.projectConfigureButton_2.setText(_translate("ActiveProjectWidget", "Configure"))
+        self.messageLabel.setText(_translate("ActiveProjectWidget", "Message"))

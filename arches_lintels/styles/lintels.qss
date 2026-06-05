@@ -2,9 +2,23 @@
     font-family: "Open Sans";
 }
 
+#topPanel {
+    background-color: #F1F4F9;
+}
+
+QStackedWidget, QScrollArea {
+    background-color: #F1F4F9;
+    /* background: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0, y2: 1,
+        stop: 0 #F1F4F9,
+        stop: 1 #fce1bd 
+    ); */
+}
+
 QLabel {
-  color: #464d55;
-  font-weight: 600;
+  color: #0f1925;
+  font-weight: 100;
 }
 
 QPushButton {
@@ -14,7 +28,7 @@ QPushButton {
   border-radius: 8px;
   border: 1px solid #0d6efd;
   padding: 5px 15px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   outline: 0px;
 }
 
@@ -25,7 +39,7 @@ QPushButton:focus {
 }
 
 QLineEdit {
-    margin-top: 10px;
+    /* margin-top: 10px; */
     text-align: left;
     background-color: #fff;
     color: black;
@@ -43,7 +57,7 @@ QLineEdit::placeholder {
 }
 
 QComboBox {
-    margin-top: 10px;
+    /* margin-top: 10px; */
     text-align: left;
     background-color: #fff;
     color: black;
@@ -164,9 +178,11 @@ QPushButton#menuButton:hover {
 QLabel#settingsTitle,
 QLabel#controlCentreTitle,
 QLabel#archesManagerLabel {
-  color: #0f1925;
-  font-size: 18px;
-  margin-bottom: 10px;
+    padding: 0px;
+    color: #0f1925;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 10px;
 }
 
 QLabel#uiLabel, 
@@ -176,8 +192,8 @@ QLabel#runningTitleLabel,
 QLabel#actionsLabel,
 QLabel#activeProjectsLabel {
   color: #0f1925;
-  font-size: 12px;
-  font-weight: normal;
+  font-size: 18px;
+  font-weight: 400;
   margin-bottom: 10px;
 }
 
@@ -211,8 +227,16 @@ QLabel#activeProjectsLabel {
     background-color: #fff;
 }
 
+#installDirsWidget,
+#userInterfaceWidget {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px 15px;
+    border-bottom: 3px solid transparent;
+}
 
 /* 
 QWidget:focus {
     border: 1px solid yellow;
 } */
+
