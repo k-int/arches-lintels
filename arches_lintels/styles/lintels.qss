@@ -22,11 +22,11 @@ QLabel {
 }
 
 QPushButton {
-  background-color: #0d6efd;
+  background-color: #569DDB;
   color: #fff;
-  font-weight: 600;
+  font-weight: 400;
   border-radius: 8px;
-  border: 1px solid #0d6efd;
+  border: 1px solid #3084ff;
   padding: 5px 15px;
   /* margin-top: 10px; */
   outline: 0px;
@@ -34,8 +34,13 @@ QPushButton {
 
 QPushButton:hover,
 QPushButton:focus {
-  background-color: #0b5ed7;
-  border: 3px solid #9ac3fe;
+  background-color: #4495db;
+  border: 1px solid #3084ff;
+}
+
+QPushButton:pressed {
+  background-color: #3f7eb5;
+  border: 1px solid #3084ff;
 }
 
 QLineEdit {
@@ -48,7 +53,8 @@ QLineEdit {
     padding: 5px 15px;    
 }
 
-QLineEdit:focus {
+QLineEdit:focus,
+QLineEdit:hover {
   border: 1px solid #d0e3ff;
 }
 
@@ -66,39 +72,9 @@ QComboBox {
     padding: 5px 15px;    
 }
 
-QRadioButton {
-    color: #788596;
-}
-
-QCheckBox::indicator,
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-    border-radius: 3px;
-    border: 1px solid #788596;
-    color: #fff;
-}
-
-QPushButton:hover,
-QComboBox:hover,
-QCheckBox::indicator:hover,
-QRadioButton::indicator:hover {
-    background-color: #e7e7e7;
-    border: 1px solid #788596;
-}
-
-QPushButton:pressed,
-QComboBox:pressed,
-QCheckBox::indicator:pressed,
-QRadioButton::indicator:pressed {
-    background-color: #c7c7c7;
-    border: 1px solid #788596;
-}
-
-QCheckBox::indicator:checked,
-QRadioButton::indicator:checked {
-    background-color: #8b8b8b;
-    border: 1px solid #5d6774;
+QComboBox:focus,
+QComboBox:hover {
+  border: 1px solid #d0e3ff;
 }
 
 #MainWindow {
