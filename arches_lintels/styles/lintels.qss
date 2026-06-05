@@ -204,7 +204,8 @@ QLabel#activeProjectsLabel {
 }
 
 #installDirsWidget,
-#userInterfaceWidget {
+#userInterfaceWidget,
+#activeProjectWidget {
     background-color: #fff;
     border-radius: 5px;
     padding: 5px 15px;
