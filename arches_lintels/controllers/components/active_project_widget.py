@@ -19,3 +19,16 @@ class ActiveProjectWidget(QWidget):
         self.ui.setupUi(self)
 
         self.ui.projectNameLabel.setText(project_key)
+        self.ui.progressBar.hide()
+        self.ui.messageLabel.hide()
+
+    def start_step(self, text):
+        self.set_message(text)
+        self.set_progress_bar()
+
+    def set_message(self, text):
+        self.ui.messageLabel.show()
+        self.ui.messageLabel.setText(text)
+
+    def set_progress_bar(self):
+        self.ui.progressBar.show()

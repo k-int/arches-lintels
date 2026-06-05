@@ -39,13 +39,17 @@ class ArchesManagerController:
             self.ui.noActiveProjectsLayout.hide()
 
             for project_name, project_dict in projects.items():
-                self.add_new_project_to_layout(project_dict=project_dict, project_key=project_name)
+                widget = self.new_proj_widget_create(project_dict=project_dict, project_key=project_name)
+                self.new_proj_widget_add_to_layout(widget)
         else:
             self.ui.noActiveProjectsLayout.show()
             # self.ui.projectsLayout.hide()
 
-    def add_new_project_to_layout(self, project_dict, project_key):
+    def new_proj_widget_create(self, project_dict, project_key):
         widget = ActiveProjectWidget(project_dict, project_key)
+        return widget
+
+    def new_proj_widget_add_to_layout(self, widget):
         self.ui.projectLayout.addWidget(widget)
 
     def create_project(self):
@@ -59,28 +63,37 @@ class ArchesManagerController:
             project_dict = self.arches_model.new_project_entry(data["project_name"], data["arches_version"])
             python_exe, args = self.arches_model.create_virtual_environment(project_dict["venv_dir"])
 
+            # Create the new project widget and add to the layout 
+            widget = self.new_proj_widget_create(project_dict=project_dict, project_key=data["project_name"])
+            self.new_proj_widget_add_to_layout(widget)
+            # Set message
+            widget.start_step("Step 1/3: Creating virtual environment")
+
             self.init_venv_process = QProcess()
 
             qprocess_debugging(self.init_venv_process)
             self.init_venv_process.finished.connect(
-               partial(self.install_arches, project_dict=project_dict, project_key=data["project_name"])
+               partial(self.install_arches, project_dict=project_dict, project_key=data["project_name"], widget=widget)
             )
             self.init_venv_process.start(python_exe, args)
 
-    def install_arches(self, exit_code, exit_status, project_dict, project_key):
+    def install_arches(self, exit_code, exit_status, project_dict, project_key, widget):
         if exit_code != 0:
             print("Failed to create vrtual environment", exit_code, exit_status)
             # todo remove from projects list? - don't want uncomplete projects clogging up list
             return
 
-        self.add_new_project_to_layout(project_dict=project_dict, project_key=project_key)
-
         venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
                                          arches_version=project_dict["arches_version"])
 
+        widget.start_step(f"Step 2/3: Installing Arches {project_dict['arches_version']} (this may take some time)")
+
         self.arches_install_process = QProcess()
         qprocess_debugging(self.arches_install_process)
-        self.arches_install_process.finished.connect(partial(self.create_arches_project, project_dict=project_dict, project_key=project_key))
+        self.arches_install_process.finished.connect(partial(self.create_arches_project, 
+                                                             project_dict=project_dict, 
+                                                             project_key=project_key, 
+                                                             widget=widget))
         self.arches_install_process.start(venv_python_exe, args)
 
     # def on_install_arches_finished(self, exit_code, exit_status, project_dict):
@@ -90,7 +103,7 @@ class ArchesManagerController:
 
     #     project_dict
 
-    def create_arches_project(self, exit_code, exit_status, project_dict, project_key):
+    def create_arches_project(self, exit_code, exit_status, project_dict, project_key, widget):
         if exit_code !=0:
             print("Failed to install Arches", exit_code, exit_status)
             return
@@ -100,6 +113,8 @@ class ArchesManagerController:
             project_name=project_key,
             arches_project_dir=project_dict["arches_project_dir"]
         )
+
+        widget.start_step(f"Step 3/3: Creating Project (this may take some time)")
 
         self.create_project_process = QProcess()
         qprocess_debugging(self.create_project_process)
