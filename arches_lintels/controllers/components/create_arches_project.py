@@ -13,10 +13,12 @@ class CreateArchesProjectDialog(QDialog):
     Arches create new project dialog interface
     """
 
-    def __init__(self):
+    def __init__(self, arches_model):
         super().__init__()
         self.ui = Ui_CreateArchesProject()
         self.ui.setupUi(self)
+        self.arches_model = arches_model
+
         self.init_ui()
         self.ui.createProjectButton.clicked.connect(self.create_project)
         self.ui.advancedButton.clicked.connect(self.open_advanced)
@@ -39,14 +41,16 @@ class CreateArchesProjectDialog(QDialog):
             self.ui.advancedOptions.setVisible(False)
 
     def create_project(self):
-        if not self.ui.archesProjectName.text():
-            self.ui.errorMessageLabel.setText("Required fields not populated.")
-            return
-        
         self.data = {
             "project_name": self.ui.archesProjectName.text(),
             "arches_version": self.ui.archesVersions.currentText()
         }
+
+        validation_pass, error_msg = self.arches_model.new_project_validation(self.data)
+
+        if not validation_pass:
+            self.ui.errorMessageLabel.setText(error_msg)
+            return
 
         # close dialog with 'Accepted' status
         self.accept()

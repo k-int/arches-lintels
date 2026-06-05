@@ -21,7 +21,7 @@ class ArchesModel:
 
     def get_projects(self):
         return self.settings_model.get_config_value("projects")
-    
+
     def get_python_exe(self):
         return os.path.join(self.get_python_path, "python.exe")
 
@@ -43,7 +43,7 @@ class ArchesModel:
         else:
             print("Project name already exists: raise error here")
             return None
-    
+
     def create_arches_project_dir(self, lintel_project_dir, project_name):
         os.makedirs(os.path.join(lintel_project_dir, project_name))
         return os.path.join(lintel_project_dir, project_name)
@@ -52,14 +52,29 @@ class ArchesModel:
         os.makedirs(os.path.join(project_dir, "venv"))
         return os.path.join(project_dir, "venv")
 
+    def new_project_validation(self, data):
+        if data["project_name"]:
+            if ' ' in data["project_name"]:
+                return False, "Error: project name should not contain any spaces"
+
+            if data["project_name"] in self.settings_model.get_config_value("projects"):
+                return False, "Error: Project with name already exists"
+        
+            return True, ""
+        
+        return False, "Error: Required fields not populated"
+
     def new_project_entry(self, project_name, arches_version):
+        """
+        Creates a new Arches project entry.
+        Since validation occurs in a step prior to this, we can assume the project is valid and 
+        ready to be added to settings.
+        """
         lintel_project_dir = self.create_lintel_project_dir(project_name)
         venv_dir = self.create_project_venv_dir(lintel_project_dir)
         arches_project_dir = self.create_arches_project_dir(lintel_project_dir, project_name)
-        
+
         new_project = {
-            "id": str(uuid4()),
-            "name": project_name,
             "arches_version": arches_version,
             "arches_installed": False,
             "lintel_project_dir": lintel_project_dir,
@@ -71,21 +86,21 @@ class ArchesModel:
         }
 
         existing_projects = self.settings_model.get_config_value("projects")
-        existing_projects.append(new_project)
+        existing_projects[project_name] = new_project
         self.settings_model.update_value("projects", existing_projects)
 
         return new_project
-    
+
     def create_virtual_environment(self, venv_dir):
         python_exe = self.get_python_exe()
         args = ["-m", "venv", venv_dir]
         return python_exe, args
-    
+
     def install_arches(self, venv_dir, arches_version):
         venv_python_exe = os.path.join(venv_dir, "Scripts", "python.exe")
         args = ["-m", "pip", "install", f"arches~={arches_version}"]
         return venv_python_exe, args
-    
+
     def create_new_project(self, venv_dir, project_name, arches_project_dir):
         # the use of archesadmin means we only support 7.6 onwards
         arches_admin_exe = os.path.join(venv_dir, "Scripts", "arches-admin.exe")

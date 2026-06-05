@@ -82,18 +82,22 @@ class SettingsModel:
     def _get_conf_vals(self, keys):
         # helper function to get values despite any nesting
         settings_temp_copy = self.settings_data
-        for key in keys:
+        for index, key in enumerate(keys):
             if isinstance(settings_temp_copy[key], dict):
                 settings_temp_copy = settings_temp_copy[key]
+                if settings_temp_copy == {} or index == (len(keys) -1):
+                    return settings_temp_copy
             else:
                 return settings_temp_copy[key]
 
     def _save_conf_vals(self, keys, value):
         # helper function to save values despite any nesting
         settings_temp_copy = self.settings_data
-        for key in keys:
+        for index, key in enumerate(keys):
             if isinstance(settings_temp_copy[key], dict):
                 settings_temp_copy = settings_temp_copy[key]
+                if settings_temp_copy == {} or index == (len(keys) -1):
+                    return settings_temp_copy
             else:
                 settings_temp_copy[key] = value
 
