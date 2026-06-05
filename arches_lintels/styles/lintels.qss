@@ -2,31 +2,54 @@
     font-family: "Open Sans";
 }
 
+QLabel {
+  color: #464d55;
+  font-weight: 600;
+}
+
 QPushButton {
-    height: 20px;
-    border-radius: 3px;
-    border: 1px solid #788596;
-    padding: 0px 4px 0px 4px;
-    color: #788596;
+  background-color: #0d6efd;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #0d6efd;
+  padding: 5px 15px;
+  margin-top: 10px;
+  outline: 0px;
+}
+
+QPushButton:hover,
+QPushButton:focus {
+  background-color: #0b5ed7;
+  border: 3px solid #9ac3fe;
 }
 
 QLineEdit {
-    height: 20px;
-    border: 1px solid #788596;
-    border-radius: 3px;
+    margin-top: 10px;
     text-align: left;
     background-color: #fff;
     color: black;
+    border-radius: 8px;
+    border: 1px solid #e0e4e7;
+    padding: 5px 15px;    
+}
+
+QLineEdit:focus {
+  border: 1px solid #d0e3ff;
+}
+
+QLineEdit::placeholder {
+  color: #767e89;
 }
 
 QComboBox {
-    height: 20px;
-    border-radius: 3px;
-    border: 1px solid #788596;
-    padding: 0px 4px 0px 4px;
+    margin-top: 10px;
+    text-align: left;
     background-color: #fff;
-    color: #788596;
-    text-align: center;
+    color: black;
+    border-radius: 8px;
+    border: 1px solid #e0e4e7;
+    padding: 5px 15px;    
 }
 
 QRadioButton {
@@ -68,13 +91,6 @@ QRadioButton::indicator:checked {
     background-color: #fff;
 }
 
-#menuButton {
-    padding: 5px;
-    border: none;
-    width: 30px;
-    height: 30px;
-}
-
 #widget {
     background-color: #f9fafd;
 }
@@ -86,6 +102,10 @@ QRadioButton::indicator:checked {
 
 #fullMenu QPushButton, QLabel,
 #iconOnlyMenu QPushButton, QLabel {
+    background-color: none;
+    font-weight: 600;
+    outline: none;
+    margin-top: 0px;
     height:30px;
     border:none;
     border-radius: 3px;
@@ -98,6 +118,23 @@ QRadioButton::indicator:checked {
 #iconOnlyMenu QPushButton:hover {
     background-color: rgba(86, 101, 115, 0.5);
 }
+
+QPushButton#menuButton {
+    background-color: none;
+    color: none;
+    font-weight: 600;
+    margin-top: 0px;
+    outline: none;
+    padding: 5px;
+    border: none;
+    width: 30px;
+    height: 30px;
+}
+
+QPushButton#menuButton:hover {
+    background-color: #f4f4f4;
+}
+
 
 #logo_label_1 {
     padding: 5px
@@ -124,20 +161,24 @@ QRadioButton::indicator:checked {
 
 
 /* Shared across pages */
-#settingsTitle, 
-#controlCentreTitle,
-#archesManagerLabel {
-    font-weight: 600;
-    font-size: 16px;
+QLabel#settingsTitle,
+QLabel#controlCentreTitle,
+QLabel#archesManagerLabel {
+  color: #0f1925;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-#uiLabel, 
-#installDirsLabel, 
-#installedTitleLabel,
-#runningTitleLabel,
-#actionsLabel,
-#activeProjectsLabel {
-    font-weight: 600;
+QLabel#uiLabel, 
+QLabel#installDirsLabel, 
+QLabel#installedTitleLabel,
+QLabel#runningTitleLabel,
+QLabel#actionsLabel,
+QLabel#activeProjectsLabel {
+  color: #0f1925;
+  font-size: 12px;
+  font-weight: normal;
+  margin-bottom: 10px;
 }
 
 #postgresInstalledLabel[state="installed"],
@@ -169,3 +210,9 @@ QRadioButton::indicator:checked {
 #scrollAreaWidgetContents {
     background-color: #fff;
 }
+
+
+/* 
+QWidget:focus {
+    border: 1px solid yellow;
+} */
