@@ -78,6 +78,7 @@ class ArchesManagerController:
             self.init_venv_process.start(python_exe, args)
 
     def install_arches(self, exit_code, exit_status, project_dict, project_key, widget):
+        widget.stop_step()
         if exit_code != 0:
             print("Failed to create vrtual environment", exit_code, exit_status)
             # todo remove from projects list? - don't want uncomplete projects clogging up list
@@ -104,6 +105,7 @@ class ArchesManagerController:
     #     project_dict
 
     def create_arches_project(self, exit_code, exit_status, project_dict, project_key, widget):
+        widget.stop_step()
         if exit_code !=0:
             print("Failed to install Arches", exit_code, exit_status)
             return
@@ -122,3 +124,8 @@ class ArchesManagerController:
         qprocessenv = node_environment(self.node_model)
         self.create_project_process.setProcessEnvironment(qprocessenv)
         self.create_project_process.start(arches_admin_exe, args)
+        self.create_project_process.finished.connect(partial(self.on_create_project_process_finished, 
+                                                             widget=widget))
+
+    def on_create_project_process_finished(self, widget):
+        widget.stop_step()

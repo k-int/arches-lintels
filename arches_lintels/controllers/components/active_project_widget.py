@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import QDialog, QWidget
 
 from arches_lintels.settings import ARCHES_VERSIONS, ARCHES_APPS, ONTOLOGIES
 from arches_lintels.views.ui_active_project_widget import Ui_ActiveProjectWidget 
+from arches_lintels.controllers.components.progress_bar import progress_bar_ui
 
 
 class ActiveProjectWidget(QWidget):
@@ -26,9 +27,15 @@ class ActiveProjectWidget(QWidget):
         self.set_message(text)
         self.set_progress_bar()
 
+    def stop_step(self):
+        self.ui.progressBar.hide()
+        self.ui.messageLabel.hide()
+        self.ui.messageLabel.setText("")
+
     def set_message(self, text):
         self.ui.messageLabel.show()
         self.ui.messageLabel.setText(text)
 
     def set_progress_bar(self):
         self.ui.progressBar.show()
+        progress_bar_ui(self.ui.progressBar)
