@@ -30,16 +30,23 @@
          <number>20</number>
         </property>
         <item>
-         <widget class="QPushButton" name="projectRunButton_2">
+         <widget class="QPushButton" name="projectRunButton">
           <property name="text">
            <string>Run</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="projectConfigureButton_2">
+         <widget class="QPushButton" name="projectConfigureButton">
           <property name="text">
            <string>Configure</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="projectInfoButton">
+          <property name="text">
+           <string>Info</string>
           </property>
          </widget>
         </item>

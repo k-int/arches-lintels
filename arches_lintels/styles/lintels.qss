@@ -212,6 +212,10 @@ QLabel#activeProjectsLabel {
     border-bottom: 3px solid transparent;
 }
 
+#projectNameLabel {
+    font-size: 14px;
+}
+
 /* 
 QWidget:focus {
     border: 1px solid yellow;
