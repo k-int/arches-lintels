@@ -4,6 +4,7 @@ from uuid import uuid4
 import datetime
 
 from arches_lintels.settings import ONTOLOGIES
+from arches_lintels.models.dependencies.gdal import GdalModel
 from arches_lintels.models.arches_components.settings_local_template import settings_local_template
 
 logger = logging.getLogger(__name__)
@@ -11,6 +12,7 @@ logger = logging.getLogger(__name__)
 class ArchesModel:
     def __init__(self, settings_model):
         self.settings_model = settings_model
+        self.gdal_model = GdalModel(self.settings_model)
         self.projects_root = os.path.join(self.get_lintels_path, "projects")
 
     @property
@@ -118,7 +120,7 @@ class ArchesModel:
         settings_local_path = os.path.join(project_dict["arches_project_dir"], project_name, "settings_local.py")
         
         with open(settings_local_path, "w") as f:
-            f.write(settings_local_template(project_name, project_dict["config"]))
+            f.write(settings_local_template(project_name, project_dict["config"], self.gdal_model.get_gdal_dll))
             logger.debug(f"settings_local.py file created at {settings_local_path}")
 
     def initialise_project(self, project_name, project_dict):

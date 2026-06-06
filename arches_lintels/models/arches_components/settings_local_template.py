@@ -7,7 +7,7 @@ from arches_lintels.settings import (
     ES_PASSWORD,
 )
 
-def settings_local_template(project_name, config):
+def settings_local_template(project_name, config, gdal_path):
 
     return f"""
 try:
@@ -38,6 +38,8 @@ DATABASES = {{
         "USER": "{PG_USER}",
     }}
 }}
+
+GDAL_LIBRARY_PATH = "{gdal_path}"
 
 MAPBOX_API_KEY = "{config['mapbox_api_key']}"
 
