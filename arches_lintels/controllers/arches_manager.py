@@ -84,6 +84,9 @@ class ArchesManagerController:
             # todo remove from projects list? - don't want uncomplete projects clogging up list
             return
 
+        # set venv_created setting as True
+        self.settings_model.update_value(["projects", project_key, "venv_created"], True)
+
         venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
                                          arches_version=project_dict["arches_version"])
 
@@ -110,6 +113,9 @@ class ArchesManagerController:
             print("Failed to install Arches", exit_code, exit_status)
             return
 
+        # set arches_installed setting as True
+        self.settings_model.update_value(["projects", project_key, "arches_installed"], True)
+
         arches_admin_exe, args = self.arches_model.create_new_project(
             venv_dir=project_dict["venv_dir"], 
             project_name=project_key,
@@ -125,7 +131,16 @@ class ArchesManagerController:
         self.create_project_process.setProcessEnvironment(qprocessenv)
         self.create_project_process.start(arches_admin_exe, args)
         self.create_project_process.finished.connect(partial(self.on_create_project_process_finished, 
+                                                             project_dict=project_dict,
+                                                             project_key=project_key,
                                                              widget=widget))
 
-    def on_create_project_process_finished(self, widget):
+    def on_create_project_process_finished(self, exit_code, exit_status, project_dict, project_key, widget):
         widget.stop_step()
+        if exit_code !=0:
+            print("Failed to create project", exit_code, exit_status)
+            return
+
+        # set project_created setting as True
+        self.settings_model.update_value(["projects", project_key, "project_created"], True)
+
