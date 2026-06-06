@@ -20,7 +20,6 @@ ES_PASSWORD = "Arch35L1nt3l5"
 ES_PORT = 49200
 
 ARCHES_VERSIONS = [
-    "7.5",
     "7.6",
     "8.0",
     "8.1",
