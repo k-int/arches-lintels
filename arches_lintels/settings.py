@@ -10,10 +10,13 @@ SYS_SETTINGS_PATH = os.path.join(ROOT_DIR, "settings.json")
 
 # Postgresql settings
 PG_USER = "postgres"
+PG_PASSWORD = "postgis"
 PG_ENCODING = "UTF8"
 PG_PORT = "45432"
 
 # Elasticsearch settings
+ES_USER = "elastic"
+ES_PASSWORD = "Arch35L1nt3l5"
 ES_PORT = 49200
 
 ARCHES_VERSIONS = [

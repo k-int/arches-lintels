@@ -3,8 +3,7 @@ import json
 from uuid import uuid4
 import datetime
 
-from arches_lintels.settings import SYS_SETTINGS_PATH
-from arches_lintels.models.settings_model import SettingsModel
+from arches_lintels.models.arches_components.settings_local_template import settings_local_template
 
 class ArchesModel:
     def __init__(self, settings_model):
@@ -64,7 +63,7 @@ class ArchesModel:
         
         return False, "Error: Required fields not populated"
 
-    def new_project_entry(self, project_name, arches_version):
+    def new_project_entry(self, project_name, arches_version, data):
         """
         Creates a new Arches project entry.
         Since validation occurs in a step prior to this, we can assume the project is valid and 
@@ -83,7 +82,8 @@ class ArchesModel:
             "project_initialised": False,
             "venv_dir": venv_dir,
             "venv_created": False,
-            "created_at": str(datetime.datetime.now())
+            "created_at": str(datetime.datetime.now()),
+            "config": data
         }
 
         existing_projects = self.settings_model.get_config_value("projects")
@@ -107,3 +107,12 @@ class ArchesModel:
         arches_admin_exe = os.path.join(venv_dir, "Scripts", "arches-admin.exe")
         args = ["startproject", project_name, "--directory", arches_project_dir]
         return arches_admin_exe, args
+
+    def settings_local(self, project_name, project_dict):
+        """
+        Generates a settings_local.py file for Lintels dependencies
+        """
+        settings_local_path = os.path.join(project_dict["arches_project_dir"], project_name, "settings_local.py")
+        
+        with open(settings_local_path, "w") as f:
+            f.write(settings_local_template.strip())

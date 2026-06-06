@@ -43,7 +43,12 @@ class CreateArchesProjectDialog(QDialog):
     def create_project(self):
         self.data = {
             "project_name": self.ui.archesProjectName.text(),
-            "arches_version": self.ui.archesVersions.currentText()
+            "arches_version": self.ui.archesVersions.currentText(),
+            "arches_apps": self.ui.archesApps.currentText(),
+            "mapbox_api_key": self.ui.mapboxApiKey.text(),
+            "ontology": self.ui.ontologyCombo.currentText(),
+            "debug": self.ui.debugCheckBox.isChecked(),
+            "accessibility_mode": self.ui.accessibilityCheckBox.isChecked()
         }
 
         validation_pass, error_msg = self.arches_model.new_project_validation(self.data)

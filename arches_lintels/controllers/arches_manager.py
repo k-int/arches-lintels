@@ -53,14 +53,13 @@ class ArchesManagerController:
         self.ui.projectLayout.addWidget(widget)
 
     def create_project(self):
-        print("CLICKED")
         self.create_project_dialog = CreateArchesProjectDialog(self.arches_model)
         create_proj_result = self.create_project_dialog.exec()
 
         if create_proj_result == QDialog.DialogCode.Accepted:
             data = self.create_project_dialog.data
 
-            project_dict = self.arches_model.new_project_entry(data["project_name"], data["arches_version"])
+            project_dict = self.arches_model.new_project_entry(data["project_name"], data["arches_version"], data)
             python_exe, args = self.arches_model.create_virtual_environment(project_dict["venv_dir"])
 
             # Create the new project widget and add to the layout 

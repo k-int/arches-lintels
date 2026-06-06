@@ -45,7 +45,6 @@ class ActiveProjectWidget(QWidget):
         """
         self._hide_all()
 
-        print(self.project_dict)
         if not self.project_dict["venv_created"]:
             self.ui.messageLabel.setText("Virtual environment does not exist")
             self.ui.messageLabel.show()
