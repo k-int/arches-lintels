@@ -80,6 +80,7 @@ class ArchesModel:
             "lintel_project_dir": lintel_project_dir,
             "arches_project_dir": arches_project_dir,
             "project_created": False,
+            "project_initialised": False,
             "venv_dir": venv_dir,
             "venv_created": False,
             "created_at": str(datetime.datetime.now())

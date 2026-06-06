@@ -44,9 +44,30 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="projectInfoButton">
+         <widget class="QPushButton" name="projectVenvButton">
           <property name="text">
-           <string>Info</string>
+           <string>Create virtual environment</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="projectInstallArchesButton">
+          <property name="text">
+           <string>Install Arches</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="projectCreateProjectButton">
+          <property name="text">
+           <string>Create Project</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="projectInitButton">
+          <property name="text">
+           <string>Initialise Project</string>
           </property>
          </widget>
         </item>

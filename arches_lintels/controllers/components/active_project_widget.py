@@ -14,16 +14,62 @@ class ActiveProjectWidget(QWidget):
 
     """
 
-    def __init__(self, project_dict, project_key):
+    def __init__(self, project_dict, project_key, settings_model):
         super().__init__()
         self.ui = Ui_ActiveProjectWidget()
         self.ui.setupUi(self)
+        self.settings_model = settings_model
+        self.project_dict = project_dict
+        self.project_key = project_key
 
         self.ui.projectNameLabel.setText(project_key)
+        self.setup_ui_buttons()
+
+    def _hide_all(self):
+        """
+        Helper function to hide all widgets/labels.
+        """
         self.ui.progressBar.hide()
         self.ui.messageLabel.hide()
+        self.ui.projectConfigureButton.hide()
+        self.ui.projectRunButton.hide()
+        self.ui.projectVenvButton.hide()
+        self.ui.projectCreateProjectButton.hide()
+        self.ui.projectInstallArchesButton.hide()
+        self.ui.projectInitButton.hide()
+
+    def setup_ui_buttons(self):
+        """
+        This function sets up the buttons in the widget by looking at what stage 
+        of installation the project is at.
+        """
+        self._hide_all()
+
+        print(self.project_dict)
+        if not self.project_dict["venv_created"]:
+            self.ui.messageLabel.setText("Virtual environment does not exist")
+            self.ui.messageLabel.show()
+            self.ui.projectVenvButton.show()
+        elif not self.project_dict["arches_installed"]:
+            self.ui.messageLabel.setText("Arches is not installed")
+            self.ui.messageLabel.show()
+            self.ui.projectInstallArchesButton.show()
+        elif not self.project_dict["project_created"]:
+            self.ui.messageLabel.setText("Project does not exist")
+            self.ui.messageLabel.show()
+            self.ui.projectCreateProjectButton.show()
+        elif not self.project_dict["project_initialised"]:
+            self.ui.messageLabel.setText("Project is not initialised")
+            self.ui.messageLabel.show()
+            self.ui.projectInitButton.show()
+        else:
+            # All values true, so can assume project exists and set up
+            self.ui.projectRunButton.show()
+            self.ui.projectConfigureButton.show()
+
 
     def start_step(self, text):
+        self._hide_all()
         self.set_message(text)
         self.set_progress_bar()
 
@@ -31,6 +77,7 @@ class ActiveProjectWidget(QWidget):
         self.ui.progressBar.hide()
         self.ui.messageLabel.hide()
         self.ui.messageLabel.setText("")
+        self.setup_ui_buttons()
 
     def set_message(self, text):
         self.ui.messageLabel.show()

@@ -46,7 +46,7 @@ class ArchesManagerController:
             # self.ui.projectsLayout.hide()
 
     def new_proj_widget_create(self, project_dict, project_key):
-        widget = ActiveProjectWidget(project_dict, project_key)
+        widget = ActiveProjectWidget(project_dict, project_key, self.settings_model)
         return widget
 
     def new_proj_widget_add_to_layout(self, widget):
@@ -78,14 +78,15 @@ class ArchesManagerController:
             self.init_venv_process.start(python_exe, args)
 
     def install_arches(self, exit_code, exit_status, project_dict, project_key, widget):
-        widget.stop_step()
         if exit_code != 0:
             print("Failed to create vrtual environment", exit_code, exit_status)
+            self.settings_model.update_value(["projects", project_key, "venv_created"], False)
             # todo remove from projects list? - don't want uncomplete projects clogging up list
             return
 
         # set venv_created setting as True
         self.settings_model.update_value(["projects", project_key, "venv_created"], True)
+        widget.stop_step()
 
         venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
                                          arches_version=project_dict["arches_version"])
@@ -108,13 +109,14 @@ class ArchesManagerController:
     #     project_dict
 
     def create_arches_project(self, exit_code, exit_status, project_dict, project_key, widget):
-        widget.stop_step()
         if exit_code !=0:
             print("Failed to install Arches", exit_code, exit_status)
+            self.settings_model.update_value(["projects", project_key, "arches_installed"], False)
             return
 
         # set arches_installed setting as True
         self.settings_model.update_value(["projects", project_key, "arches_installed"], True)
+        widget.stop_step()
 
         arches_admin_exe, args = self.arches_model.create_new_project(
             venv_dir=project_dict["venv_dir"], 
@@ -136,11 +138,12 @@ class ArchesManagerController:
                                                              widget=widget))
 
     def on_create_project_process_finished(self, exit_code, exit_status, project_dict, project_key, widget):
-        widget.stop_step()
         if exit_code !=0:
             print("Failed to create project", exit_code, exit_status)
+            self.settings_model.update_value(["projects", project_key, "project_created"], False)
             return
 
         # set project_created setting as True
         self.settings_model.update_value(["projects", project_key, "project_created"], True)
+        widget.stop_step()
 
