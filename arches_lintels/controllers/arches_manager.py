@@ -66,7 +66,7 @@ class ArchesManagerController:
             widget = self.new_proj_widget_create(project_dict=project_dict, project_key=data["project_name"])
             self.new_proj_widget_add_to_layout(widget)
             # Set message
-            widget.start_step("Step 1/3: Creating virtual environment")
+            widget.start_step("Step 1/4: Creating virtual environment")
 
             self.init_venv_process = QProcess()
 
@@ -90,7 +90,7 @@ class ArchesManagerController:
         venv_python_exe, args = self.arches_model.install_arches(venv_dir=project_dict["venv_dir"],
                                          arches_version=project_dict["arches_version"])
 
-        widget.start_step(f"Step 2/3: Installing Arches {project_dict['arches_version']} (this may take some time)")
+        widget.start_step(f"Step 2/4: Installing Arches {project_dict['arches_version']} (this may take some time)")
 
         self.arches_install_process = QProcess()
         qprocess_debugging(self.arches_install_process)
@@ -123,7 +123,7 @@ class ArchesManagerController:
             arches_project_dir=project_dict["arches_project_dir"]
         )
 
-        widget.start_step(f"Step 3/3: Creating Project (this may take some time)")
+        widget.start_step(f"Step 3/4: Creating Project (this may take some time)")
 
         self.create_project_process = QProcess()
         qprocess_debugging(self.create_project_process)
@@ -131,12 +131,12 @@ class ArchesManagerController:
         qprocessenv = node_environment(self.node_model)
         self.create_project_process.setProcessEnvironment(qprocessenv)
         self.create_project_process.start(arches_admin_exe, args)
-        self.create_project_process.finished.connect(partial(self.on_create_project_process_finished, 
+        self.create_project_process.finished.connect(partial(self.initialise_project, 
                                                              project_dict=project_dict,
                                                              project_key=project_key,
                                                              widget=widget))
 
-    def on_create_project_process_finished(self, exit_code, exit_status, project_dict, project_key, widget):
+    def initialise_project(self, exit_code, exit_status, project_dict, project_key, widget):
         if exit_code !=0:
             print("Failed to create project", exit_code, exit_status)
             self.settings_model.update_value(["projects", project_key, "project_created"], False)
@@ -146,3 +146,22 @@ class ArchesManagerController:
         self.settings_model.update_value(["projects", project_key, "project_created"], True)
         widget.stop_step()
 
+        venv_python_exe, args = self.arches_model.initialise_project(project_name=project_key, project_dict=project_dict)
+        
+        widget.start_step(f"Step 4/4: Initialising Project (this may take some time)")
+
+        self.init_project_process = QProcess()
+        qprocess_debugging(self.init_project_process)
+
+        self.init_project_process.start(venv_python_exe, args)
+        self.init_project_process.finished.connect(partial(self.on_initialise_project_finished, 
+                                                             project_dict=project_dict,
+                                                             project_key=project_key,
+                                                             widget=widget))
+
+
+    def on_initialise_project_finished(self, exit_code, exit_status, project_dict, project_key, widget):
+        if exit_code !=0:
+            print("Failed to init project", exit_code, exit_status)
+            self.settings_model.update_value(["projects", project_key, "project_initialised"], False)
+            return

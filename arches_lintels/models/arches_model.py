@@ -1,9 +1,12 @@
 import os
-import json
+import logging
 from uuid import uuid4
 import datetime
 
+from arches_lintels.settings import ONTOLOGIES
 from arches_lintels.models.arches_components.settings_local_template import settings_local_template
+
+logger = logging.getLogger(__name__)
 
 class ArchesModel:
     def __init__(self, settings_model):
@@ -115,4 +118,24 @@ class ArchesModel:
         settings_local_path = os.path.join(project_dict["arches_project_dir"], project_name, "settings_local.py")
         
         with open(settings_local_path, "w") as f:
-            f.write(settings_local_template.strip())
+            f.write(settings_local_template(project_name, project_dict["config"]))
+            logger.debug(f"settings_local.py file created at {settings_local_path}")
+
+    def initialise_project(self, project_name, project_dict):
+        self.settings_local(project_name, project_dict)
+
+        venv_python_exe = os.path.join(project_dict["venv_dir"], "Scripts", "python.exe")
+        manage_py = os.path.join(project_dict["arches_project_dir"], "manage.py")
+        args = [manage_py, "setup_db", "--force"]
+        return venv_python_exe, args
+    
+    def load_ontology(self, project_dict):
+        venv_python_exe = os.path.join(project_dict["venv_dir"], "Scripts", "python.exe")
+        manage_py = os.path.join(project_dict["project_dir"], "manage.py")
+
+        proj_ontology = project_dict["config"]
+        if proj_ontology:
+            ontology_path = ONTOLOGIES[proj_ontology]
+
+        args = [manage_py, "load_ontology", "-s", ontology_path]
+        return venv_python_exe, args
