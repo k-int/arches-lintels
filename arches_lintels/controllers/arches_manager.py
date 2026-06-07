@@ -185,18 +185,20 @@ class ArchesManagerController:
 
         self.npm_build_dev_process = QProcess()
         self.npm_build_dev_process.setWorkingDirectory(project_dict["arches_project_dir"])
-        qprocess_debugging(self.npm_build_dev_process, stdout_callback=self._scan_for_webpack_completion)
+
+        callback_funct = partial(self._scan_for_webpack_completion, widget=widget)
+        qprocess_debugging(self.npm_build_dev_process, stdout_callback=callback_funct)
 
         qprocessenv = node_environment(self.node_model)
         self.npm_build_dev_process.setProcessEnvironment(qprocessenv)
         self.npm_build_dev_process.start(primary_cmd, npm_args)
         widget.start_step("Starting Arches project server...")
 
-    def _scan_for_webpack_completion(self, output_text):
+    def _scan_for_webpack_completion(self, output_text, widget):
         if not self.npm_build_dev_process:
             return
         
         output_text = output_text.lower()
         
         if "compiled successfully" in output_text:
-            print("[System]: Webpack Compiler is Online!!!!!!!!!!!!!!")
+            widget.stop_step()

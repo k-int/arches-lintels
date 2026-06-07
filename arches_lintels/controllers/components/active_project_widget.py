@@ -91,4 +91,4 @@ class ActiveProjectWidget(QWidget):
         progress_bar_ui(self.ui.progressBar)
 
     def run_button(self):
-        self.run_project_signal.emit(self.project_key)        
+        self.run_project_signal.emit(self.project_key)
