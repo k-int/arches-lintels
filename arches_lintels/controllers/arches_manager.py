@@ -56,6 +56,7 @@ class ArchesManagerController:
         return widget
 
     def new_proj_widget_add_to_layout(self, widget):
+        self.ui.noActiveProjectsLayout.hide() # hide "No active projects" again
         self.ui.projectLayout.addWidget(widget)
 
     def create_project(self):

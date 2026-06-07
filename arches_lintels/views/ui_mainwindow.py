@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 792, 571))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 769, 571))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
@@ -480,13 +480,13 @@ class Ui_MainWindow(object):
         self.actionmore.setObjectName("actionmore")
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Arches Lintels"))
-        self.homePageTitle.setText(_translate("MainWindow", "Welcome to Arches Lintels"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Lintels for Arches"))
+        self.homePageTitle.setText(_translate("MainWindow", "Welcome to Lintels for Arches"))
         self.controlCentreTitle.setText(_translate("MainWindow", "Control centre"))
         self.postgresRunningLabel.setText(_translate("MainWindow", "running light"))
         self.elasticRunningLabel.setText(_translate("MainWindow", "running light"))
@@ -537,7 +537,7 @@ class Ui_MainWindow(object):
 "Arches Lintels offers to help interested individuals or organisations experiment and get a feel of Arches before committing to deploying the platform in production. It helps to lower the barrier to entry, reducing the technical knowledge and experience required."))
         self.logoIconOnly.setText(_translate("MainWindow", "logoimg"))
         self.logoIconFull.setText(_translate("MainWindow", "logoimg"))
-        self.logoTextFull.setText(_translate("MainWindow", "Arches Lintels"))
+        self.logoTextFull.setText(_translate("MainWindow", "Lintels for Arches"))
         self.homeFull.setText(_translate("MainWindow", "Home"))
         self.controlCentreFull.setText(_translate("MainWindow", "Control Centre"))
         self.archesCentreFull.setText(_translate("MainWindow", "Arches Manager"))

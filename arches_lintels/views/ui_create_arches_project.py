@@ -102,6 +102,7 @@ class Ui_CreateArchesProject(object):
         self.debugCheckBox = QtWidgets.QCheckBox(parent=self.advancedOptions)
         self.debugCheckBox.setLayoutDirection(QtCore.Qt.LayoutDirection.RightToLeft)
         self.debugCheckBox.setText("")
+        self.debugCheckBox.setChecked(True)
         self.debugCheckBox.setObjectName("debugCheckBox")
         self.horizontalLayout_6.addWidget(self.debugCheckBox)
         self.verticalLayout_3.addLayout(self.horizontalLayout_6)

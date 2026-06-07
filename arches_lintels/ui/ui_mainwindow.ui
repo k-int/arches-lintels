@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Arches Lintels</string>
+   <string>Lintels for Arches</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -108,7 +108,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>792</width>
+            <width>769</width>
             <height>571</height>
            </rect>
           </property>
@@ -131,7 +131,7 @@
            <item>
             <widget class="QStackedWidget" name="stackedWidget">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="homePage">
               <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -157,7 +157,7 @@
                <item>
                 <widget class="QLabel" name="homePageTitle">
                  <property name="text">
-                  <string>Welcome to Arches Lintels</string>
+                  <string>Welcome to Lintels for Arches</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1085,7 +1085,7 @@ Arches Lintels offers to help interested individuals or organisations experiment
          <item>
           <widget class="QLabel" name="logoTextFull">
            <property name="text">
-            <string>Arches Lintels</string>
+            <string>Lintels for Arches</string>
            </property>
           </widget>
          </item>
