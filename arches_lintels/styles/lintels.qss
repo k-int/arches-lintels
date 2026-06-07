@@ -151,9 +151,11 @@ QPushButton#menuButton:hover {
 
 
 /* Shared across pages */
+QLabel#homePageTitle,
 QLabel#settingsTitle,
 QLabel#controlCentreTitle,
-QLabel#archesManagerLabel {
+QLabel#archesManagerLabel,
+QLabel#aboutTitle {
     padding: 0px;
     color: #0f1925;
     font-size: 24px;
@@ -166,7 +168,8 @@ QLabel#installDirsLabel,
 QLabel#installedTitleLabel,
 QLabel#runningTitleLabel,
 QLabel#actionsLabel,
-QLabel#activeProjectsLabel {
+QLabel#activeProjectsLabel,
+QLabel#aboutSubTitle {
   color: #0f1925;
   font-size: 18px;
   font-weight: 400;
