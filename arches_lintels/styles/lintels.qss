@@ -208,7 +208,8 @@ QLabel#aboutSubTitle {
 
 #installDirsWidget,
 #userInterfaceWidget,
-#activeProjectWidget {
+#activeProjectWidget,
+#controlCentreLayoutWidget {
     background-color: #fff;
     border-radius: 5px;
     padding: 5px 15px;
