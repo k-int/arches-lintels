@@ -120,7 +120,10 @@ class ArchesModel:
         settings_local_path = os.path.join(project_dict["arches_project_dir"], project_name, "settings_local.py")
         
         with open(settings_local_path, "w") as f:
-            f.write(settings_local_template(project_name, project_dict["config"], self.gdal_model.get_gdal_dll))
+            f.write(settings_local_template(project_name, 
+                                            project_dict["config"], 
+                                            self.gdal_model.get_gdal_dll,
+                                            self.gdal_model.get_geos_c_dll))
             logger.debug(f"settings_local.py file created at {settings_local_path}")
 
     def initialise_project(self, project_name, project_dict):

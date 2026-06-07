@@ -7,7 +7,7 @@ from arches_lintels.settings import (
     ES_PASSWORD,
 )
 
-def settings_local_template(project_name, config, gdal_path):
+def settings_local_template(project_name, config, gdal_path, geos_c_dll):
 
     return f"""
 try:
@@ -28,7 +28,7 @@ DATABASES = {{
         "CONN_MAX_AGE": 0,
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "HOST": "localhost",
-        "NAME": "arches_her_v76",
+        "NAME": "{project_name}",
         "OPTIONS": {{}},
         "PASSWORD": "{PG_PASSWORD}",
         "PORT": "{PG_PORT}",
@@ -40,6 +40,7 @@ DATABASES = {{
 }}
 
 GDAL_LIBRARY_PATH = "{gdal_path}"
+GEOS_LIBRARY_PATH = "{geos_c_dll}"
 
 MAPBOX_API_KEY = "{config['mapbox_api_key']}"
 

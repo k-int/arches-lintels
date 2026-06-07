@@ -13,4 +13,10 @@ class GdalModel:
 
     @property
     def get_gdal_dll(self):
-        return os.path.join(self.get_gdal_path, "bin", "gdal.dll")
+        # Here we replace the windows path with the ubuntu one to prevent settings_local.py error
+        return os.path.join(self.get_gdal_path, "bin", "gdal.dll").replace("\\","/")
+    
+    @property
+    def get_geos_c_dll(self):
+        # Here we replace the windows path with the ubuntu one
+        return os.path.join(self.get_gdal_path, "bin", "geos_c.dll").replace("\\","/")
