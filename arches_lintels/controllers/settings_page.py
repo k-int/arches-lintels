@@ -19,7 +19,8 @@ class SettingsPage:
         self.ui.filePathPostgres.setText(self.settings_model.get_config_value(["dependencies","postgres","install_directory"]))
         self.ui.filePathElastic.setText(self.settings_model.get_config_value(["dependencies","elasticsearch","install_directory"]))
         self.ui.filePathNodejs.setText(self.settings_model.get_config_value(["dependencies","nodejs","install_directory"]))
-        self.ui.filePathGit.setText(self.settings_model.get_config_value(["dependencies","git","install_directory"]))        
+        self.ui.filePathGit.setText(self.settings_model.get_config_value(["dependencies","git","install_directory"]))
+        self.ui.filePathGdal.setText(self.settings_model.get_config_value(["dependencies","git","install_directory"]))
 
         self.ui.fileBrowseLintels.clicked.connect(
             partial(self.select_folder,

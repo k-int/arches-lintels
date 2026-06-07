@@ -4,7 +4,7 @@ import os
 
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtCore import QDir
-from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtGui import QFontDatabase, QIcon
 
 from scripts.build_ui import build_ui
 from arches_lintels.settings import APP_ROOT
@@ -24,6 +24,7 @@ def main():
     app = QApplication(sys.argv)
 
     QDir.addSearchPath("styles", os.path.join(APP_ROOT, "styles"))
+    QDir.addSearchPath("img", os.path.join(APP_ROOT, "img"))
     fonts = [
         "styles:fonts/opensans/OpenSans-Regular.ttf",
         "styles:fonts/opensans/OpenSans-Light.ttf",
@@ -35,6 +36,8 @@ def main():
 
     with open(os.path.join(APP_ROOT, "styles", "lintels.qss")) as f:
         app.setStyleSheet(f.read())
+
+    app.setWindowIcon(QIcon('img:lintels-logo.svg'))
 
     # init settings model and pass to application
     settings_model = SettingsModel(initialise_config=True)

@@ -1,7 +1,8 @@
 import os
 
-from PyQt6.QtGui import QIcon
-from PyQt6.QtCore import QDir, QSize
+from PyQt6.QtSvg import QSvgRenderer
+from PyQt6.QtGui import QIcon, QPixmap, QPainter
+from PyQt6.QtCore import QDir, QSize, Qt
 from PyQt6.QtWidgets import QMainWindow
 
 from arches_lintels.settings import APP_ROOT, VERSION
@@ -71,6 +72,26 @@ class MainWindow(QMainWindow):
         self.ui.versionIconOnly.setText(VERSION)
         self.ui.versionFull.setText(f"Lintels {VERSION}")
 
+        self.ui.logoIconOnly.setText("")
+        self.ui.logoIconOnly.setPixmap(
+            QPixmap("img:lintels-logo.svg").scaled(
+                46,
+                46,
+                # Qt.AspectRatioMode.KeepAspectRatio,
+                # Qt.TransformationMode.SmoothTransformation,
+            )
+        )
+
+        self.ui.logoIconFull.setText("")
+        self.ui.logoIconFull.setPixmap(
+            QPixmap("img:lintels-logo.svg").scaled(
+                46,
+                46,
+                # Qt.AspectRatioMode.KeepAspectRatio,
+                # Qt.TransformationMode.SmoothTransformation,
+            )
+        )
+
         # initialise full menu visible by default
         self.ui.iconOnlyMenu.setVisible(False)
         self.ui.fullMenu.setVisible(True)
@@ -121,4 +142,3 @@ class MainWindow(QMainWindow):
         else:
             self.ui.iconOnlyMenu.setVisible(False)
             self.ui.fullMenu.setVisible(True)
-

@@ -125,10 +125,20 @@ QPushButton#menuButton:hover {
     background-color: #f4f4f4;
 }
 
-
-#logo_label_1 {
-    padding: 5px
+#logoTextFull {
+    background-color: none;
+    font-weight: 600;
+    outline: none;
+    margin-top: 0px;
+    height:30px;
+    border:none;
+    border-radius: 3px;
+    text-align: left;
+    padding: 8px 40px 8px 15px;
+    color: #788596;
 }
+
+
 
 #fullMenu {
     background-color: #313a46;
@@ -136,16 +146,6 @@ QPushButton#menuButton:hover {
 
 
 #fullMenu QPushButton:checked {
-    color: #fff;
-}
-
-#logo_label_2 {
-    padding: 5px;
-    color: #fff;
-}
-
-#logo_label_3 {
-    padding-right: 10px;
     color: #fff;
 }
 
