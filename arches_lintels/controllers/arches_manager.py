@@ -202,3 +202,4 @@ class ArchesManagerController:
         
         if "compiled successfully" in output_text:
             widget.stop_step()
+            widget.project_running()

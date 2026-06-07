@@ -41,6 +41,7 @@ class ActiveProjectWidget(QWidget):
         self.ui.projectCreateProjectButton.hide()
         self.ui.projectInstallArchesButton.hide()
         self.ui.projectInitButton.hide()
+        self.ui.projectStopRunningButton.hide()
 
     def setup_ui_buttons(self):
         """
@@ -92,3 +93,11 @@ class ActiveProjectWidget(QWidget):
 
     def run_button(self):
         self.run_project_signal.emit(self.project_key)
+
+    def project_running(self):
+        self._hide_all()
+        self.ui.projectStopRunningButton.show()
+        self.ui.messageLabel.show()
+        url = f"<a href='http://localhost:8000' style='color: #4A90E2'>http://localhost:8000</a>"
+        self.ui.messageLabel.setOpenExternalLinks(True)
+        self.ui.messageLabel.setText(f"Project running on {url}")
