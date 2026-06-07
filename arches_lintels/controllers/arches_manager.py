@@ -165,3 +165,7 @@ class ArchesManagerController:
             print("Failed to init project", exit_code, exit_status)
             self.settings_model.update_value(["projects", project_key, "project_initialised"], False)
             return
+
+        # set project_initialised setting as True
+        self.settings_model.update_value(["projects", project_key, "project_initialised"], True)
+        widget.stop_step()
