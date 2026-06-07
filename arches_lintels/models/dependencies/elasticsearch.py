@@ -2,14 +2,13 @@ import os
 import json
 import urllib.request
 
-from arches_lintels.settings import ES_PORT
+from arches_lintels.settings import ES_PORT, ES_MAX_RETRIES
 from arches_lintels.models.settings_model import SettingsModel
 
 
 class ElasticsearchModel():
     def __init__(self, settings_model):
         self.settings_model = settings_model
-        self.max_retries = 15
 
     @property
     def get_elasticsearch_path(self):
@@ -25,8 +24,6 @@ class ElasticsearchModel():
         return os.path.join(self.get_elasticsearch_path, "bin", "elasticsearch.bat")
 
     def start_elasticsearch(self):
-        print("STARTING ELASTICSEARCH")
-
         es_bat = self.get_es_bat_path()
 
         # Target cmd.exe instead of the batch file directly
@@ -57,7 +54,7 @@ class ElasticsearchModel():
         """
         Pings the localhost elasticsearch endpoint to assess service health.
         Returns True if the endpoint is reachable, False if fails to reach after 
-        self.max_retries is reached, or None if in retry phase.
+        ES_MAX_RETRIES is reached, or None if in retry phase.
         """
         url = f"http://localhost:{ES_PORT}"
         count +=1
@@ -67,10 +64,10 @@ class ElasticsearchModel():
                 if response.getcode() == 200:
                     return True, count
         except Exception as e:
-            print(f"Attempt {count}/{self.max_retries}...")
+            print(f"Attempt {count}/{ES_MAX_RETRIES}...")
         
-        if count >= self.max_retries:
-            print(f"Maximum number of attempts made ({self.max_retries}), stopping service.")
+        if count >= ES_MAX_RETRIES:
+            print(f"Maximum number of attempts made ({ES_MAX_RETRIES}), stopping service.")
             return False, count
 
         return None, count

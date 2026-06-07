@@ -72,10 +72,10 @@ class ElasticsearchController():
             self.es_timer.start(5000)  # Check every 5 seconds
 
         elif new_state == QProcess.ProcessState.NotRunning:
-            print("Elasticsearch has exited. (Red Light)")
+            print("Elasticsearch has exited")
             self.es_timer.stop()
+            self.es_timer_count = 0
             self.dep_ui_updates.default_not_running()
-            print("NOT RUNNING")
 
     def elasticsearch_health(self):
         result, self.es_timer_count = self.elasticsearch_model.elasticsearch_health(self.es_timer_count)
