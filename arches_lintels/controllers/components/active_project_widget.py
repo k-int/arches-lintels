@@ -15,6 +15,7 @@ class ActiveProjectWidget(QWidget):
     """
 
     run_project_signal = pyqtSignal(str)
+    stop_project_signal = pyqtSignal(str)
 
     def __init__(self, project_dict, project_key, settings_model):
         super().__init__()
@@ -25,6 +26,7 @@ class ActiveProjectWidget(QWidget):
         self.project_key = project_key
 
         self.ui.projectRunButton.clicked.connect(self.run_button)
+        self.ui.projectStopRunningButton.clicked.connect(self.stop_button)
 
         self.ui.projectNameLabel.setText(project_key)
         self.setup_ui_buttons()
@@ -93,6 +95,9 @@ class ActiveProjectWidget(QWidget):
 
     def run_button(self):
         self.run_project_signal.emit(self.project_key)
+
+    def stop_button(self):
+        self.stop_project_signal.emit(self.project_key)
 
     def project_running(self):
         self._hide_all()

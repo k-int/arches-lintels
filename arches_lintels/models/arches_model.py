@@ -164,3 +164,9 @@ class ArchesModel:
         ]
 
         return primary_cmd, args
+    
+    def stop_project(self, pid):
+        command = "taskkill"
+        args = ["/F", "/T", "/PID", str(pid)]
+
+        return command, args

@@ -51,6 +51,8 @@ class ArchesManagerController:
                                                 project_dict=project_dict, 
                                                 project_key=project_key, 
                                                 widget=widget))
+        widget.stop_project_signal.connect(partial(self.stop_project, 
+                                                widget=widget))        
         return widget
 
     def new_proj_widget_add_to_layout(self, widget):
@@ -203,3 +205,27 @@ class ArchesManagerController:
         if "compiled successfully" in output_text:
             widget.stop_step()
             widget.project_running()
+
+    def stop_project(self, widget):
+        if self.npm_build_dev_process or self.run_project_process:
+            if self.npm_build_dev_process:
+                pid = self.npm_build_dev_process.processId()
+                command, args = self.arches_model.stop_project(pid)
+                self.stop_npm_process = QProcess()
+                qprocess_debugging(self.stop_npm_process)
+                self.stop_npm_process.start(command, args)
+                self.stop_npm_process.waitForFinished(3000)
+                # Now we can kill both processes
+                self.stop_npm_process.kill()
+                self.npm_build_dev_process.kill()
+            if self.run_project_process:
+                pid = self.npm_build_dev_process.processId()
+                command, args = self.arches_model.stop_project(pid)
+                self.stop_runserver_process = QProcess()
+                qprocess_debugging(self.stop_runserver_process)
+                self.stop_runserver_process.start(command, args)
+                self.stop_runserver_process.waitForFinished(3000)
+                # Now we can kill both processes
+                self.stop_runserver_process.kill()
+                self.run_project_process.kill()
+            widget.setup_ui_buttons()
