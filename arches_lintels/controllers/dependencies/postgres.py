@@ -41,7 +41,7 @@ class PostgresController():
         initdb_exe, args = self.postgres_model.initialise_postgres()
 
         self.init_process = QProcess()
-        qprocess_debugging(self.init_postgis_process)
+        qprocess_debugging(self.init_process)
         self.init_process.start(initdb_exe, args)
         self.init_process.finished.connect(
             self.on_init_postgres_finished
