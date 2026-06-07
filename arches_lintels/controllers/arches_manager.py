@@ -180,33 +180,23 @@ class ArchesManagerController:
         self.run_project_process = QProcess()
         qprocess_debugging(self.run_project_process)
         self.run_project_process.start(venv_python_exe, args)
-        # self.run_project_process.finished.connect(partial(self.run_npm_build_development, 
-        #                                                      project_dict=project_dict,
-        #                                                      project_key=project_key,
-        #                                                      widget=widget))
 
         primary_cmd, npm_args = self.arches_model.run_npm_build_development()
 
         self.npm_build_dev_process = QProcess()
-        self.npm_build_dev_process.setWorkingDirectory(project_dict["arches_project_dir"])        
-        qprocess_debugging(self.npm_build_dev_process)
+        self.npm_build_dev_process.setWorkingDirectory(project_dict["arches_project_dir"])
+        qprocess_debugging(self.npm_build_dev_process, stdout_callback=self._scan_for_webpack_completion)
 
         qprocessenv = node_environment(self.node_model)
         self.npm_build_dev_process.setProcessEnvironment(qprocessenv)
         self.npm_build_dev_process.start(primary_cmd, npm_args)
+        widget.start_step("Starting Arches project server...")
 
-
-
-    # def run_npm_build_development(self, exit_code, exit_status, project_dict, project_key, widget):
-    #     if exit_code !=0:
-    #         print("Failed to run project", exit_code, exit_status)
-    #         return
-
-    #     primary_cmd, args = self.arches_model.run_npm_build_development(project_name=project_key, project_dict=project_dict)
-
-    #     self.npm_build_dev_process = QProcess()
-    #     qprocess_debugging(self.npm_build_dev_process)
-
-    #     qprocessenv = node_environment(self.node_model)
-    #     self.npm_build_dev_process.setProcessEnvironment(qprocessenv)
-    #     self.npm_build_dev_process.start(primary_cmd, args)
+    def _scan_for_webpack_completion(self, output_text):
+        if not self.npm_build_dev_process:
+            return
+        
+        output_text = output_text.lower()
+        
+        if "compiled successfully" in output_text:
+            print("[System]: Webpack Compiler is Online!!!!!!!!!!!!!!")
