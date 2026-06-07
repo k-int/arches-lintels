@@ -25,8 +25,8 @@ class ArchesManagerController:
         super().__init__()
         self.ui = ui
         self.settings_model = settings_model
-        self.arches_model = ArchesModel(settings_model)
         self.node_model = NodeModel(settings_model)
+        self.arches_model = ArchesModel(settings_model, self.node_model)
 
         self.init_projects_ui()
 
@@ -47,6 +47,10 @@ class ArchesManagerController:
 
     def new_proj_widget_create(self, project_dict, project_key):
         widget = ActiveProjectWidget(project_dict, project_key, self.settings_model)
+        widget.run_project_signal.connect(partial(self.run_project, 
+                                                project_dict=project_dict, 
+                                                project_key=project_key, 
+                                                widget=widget))
         return widget
 
     def new_proj_widget_add_to_layout(self, widget):
@@ -169,3 +173,40 @@ class ArchesManagerController:
         # set project_initialised setting as True
         self.settings_model.update_value(["projects", project_key, "project_initialised"], True)
         widget.stop_step()
+
+    def run_project(self, project_dict, project_key, widget):
+        venv_python_exe, args = self.arches_model.run_project(project_name=project_key, project_dict=project_dict)
+        
+        self.run_project_process = QProcess()
+        qprocess_debugging(self.run_project_process)
+        self.run_project_process.start(venv_python_exe, args)
+        # self.run_project_process.finished.connect(partial(self.run_npm_build_development, 
+        #                                                      project_dict=project_dict,
+        #                                                      project_key=project_key,
+        #                                                      widget=widget))
+
+        primary_cmd, npm_args = self.arches_model.run_npm_build_development()
+
+        self.npm_build_dev_process = QProcess()
+        self.npm_build_dev_process.setWorkingDirectory(project_dict["arches_project_dir"])        
+        qprocess_debugging(self.npm_build_dev_process)
+
+        qprocessenv = node_environment(self.node_model)
+        self.npm_build_dev_process.setProcessEnvironment(qprocessenv)
+        self.npm_build_dev_process.start(primary_cmd, npm_args)
+
+
+
+    # def run_npm_build_development(self, exit_code, exit_status, project_dict, project_key, widget):
+    #     if exit_code !=0:
+    #         print("Failed to run project", exit_code, exit_status)
+    #         return
+
+    #     primary_cmd, args = self.arches_model.run_npm_build_development(project_name=project_key, project_dict=project_dict)
+
+    #     self.npm_build_dev_process = QProcess()
+    #     qprocess_debugging(self.npm_build_dev_process)
+
+    #     qprocessenv = node_environment(self.node_model)
+    #     self.npm_build_dev_process.setProcessEnvironment(qprocessenv)
+    #     self.npm_build_dev_process.start(primary_cmd, args)

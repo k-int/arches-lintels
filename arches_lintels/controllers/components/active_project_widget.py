@@ -1,7 +1,7 @@
 import os
 
 from PyQt6.QtGui import QIcon, QFontDatabase
-from PyQt6.QtCore import QDir, QSize
+from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QDialog, QWidget
 
 from arches_lintels.settings import ARCHES_VERSIONS, ARCHES_APPS, ONTOLOGIES
@@ -14,6 +14,8 @@ class ActiveProjectWidget(QWidget):
 
     """
 
+    run_project_signal = pyqtSignal(str)
+
     def __init__(self, project_dict, project_key, settings_model):
         super().__init__()
         self.ui = Ui_ActiveProjectWidget()
@@ -21,6 +23,8 @@ class ActiveProjectWidget(QWidget):
         self.settings_model = settings_model
         self.project_dict = project_dict
         self.project_key = project_key
+
+        self.ui.projectRunButton.clicked.connect(self.run_button)
 
         self.ui.projectNameLabel.setText(project_key)
         self.setup_ui_buttons()
@@ -85,3 +89,6 @@ class ActiveProjectWidget(QWidget):
     def set_progress_bar(self):
         self.ui.progressBar.show()
         progress_bar_ui(self.ui.progressBar)
+
+    def run_button(self):
+        self.run_project_signal.emit(self.project_key)        

@@ -10,8 +10,9 @@ from arches_lintels.models.arches_components.settings_local_template import sett
 logger = logging.getLogger(__name__)
 
 class ArchesModel:
-    def __init__(self, settings_model):
+    def __init__(self, settings_model, node_model):
         self.settings_model = settings_model
+        self.node_model = node_model
         self.gdal_model = GdalModel(self.settings_model)
         self.projects_root = os.path.join(self.get_lintels_path, "projects")
 
@@ -144,3 +145,22 @@ class ArchesModel:
 
         args = [manage_py, "load_ontology", "-s", ontology_path]
         return venv_python_exe, args
+    
+    def run_project(self, project_name, project_dict):
+        venv_python_exe = os.path.join(project_dict["venv_dir"], "Scripts", "python.exe")
+        manage_py = os.path.join(project_dict["arches_project_dir"], "manage.py")
+        args = [manage_py, "runserver", "8000"]
+        return venv_python_exe, args
+    
+    def run_npm_build_development(self):
+        npm_cmd = self.node_model.get_npm_cmd_path
+        primary_cmd = "cmd.exe"
+
+        args = [
+            "/c",
+            npm_cmd,
+            "run",
+            "start"
+        ]
+
+        return primary_cmd, args

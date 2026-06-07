@@ -19,8 +19,13 @@ class NodeModel:
             os.makedirs(npm_cache_dir)
         return npm_cache_dir
 
+    @property
     def get_node_exe_path(self):
         return os.path.join(self.get_nodejs_path, "node.exe")
+
+    @property
+    def get_npm_cmd_path(self):
+        return os.path.join(self.get_nodejs_path, "npm.cmd")
 
     def get_git_exe_path(self):
         return os.path.join(self.get_git_path, "cmd", "git.exe")
